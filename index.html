@@ -111,11 +111,18 @@ body.light .cl-badge.B{background:#fde7e8;color:#c0343a;} body.light .cl-badge.Q
 .ring.run.longa{border-color:var(--blue);box-shadow:0 0 26px rgba(91,141,239,.5);}
 @keyframes ringpulse{0%,100%{transform:scale(1);}50%{transform:scale(1.03);}}
 .player-frame{border:1px solid var(--line2);border-radius:12px;overflow:hidden;background:#000;} .player-frame iframe{width:100%;height:240px;border:0;display:block;} .player-frame.audio iframe{height:152px;} .player-frame.spbig iframe{height:352px;}
+.sp-list{max-height:240px;overflow:auto;margin-top:10px;display:flex;flex-direction:column;gap:6px;} .sp-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;cursor:pointer;background:var(--surface2);} .sp-item:hover{border-color:var(--gold);} .sp-item img{width:36px;height:36px;border-radius:6px;object-fit:cover;flex:none;background:var(--surface3);} code{background:var(--surface3);padding:1px 6px;border-radius:5px;font-size:12px;word-break:break-all;}
 .ring-wrap{position:relative;width:220px;height:220px;margin:10px 0;} .pring{width:220px;height:220px;transform:rotate(-90deg);} .pring-bg{fill:none;stroke:var(--surface3);stroke-width:9;} .pring-fg{fill:none;stroke-width:9;stroke-linecap:round;transition:stroke-dashoffset .4s linear;} .ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
 .prof-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;} @media(max-width:640px){.prof-grid{grid-template-columns:repeat(2,1fr);}}
 .prof{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:12px;cursor:pointer;text-align:left;transition:.15s;} .prof:hover{border-color:var(--gold);} .prof.on{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold-dim);}
 .prof-dots{display:flex;gap:5px;margin-bottom:8px;} .prof-dots span{width:20px;height:20px;border-radius:6px;border:1px solid rgba(0,0,0,.12);} .prof-name{font-size:12.5px;font-weight:600;}
 .col-in{width:100%;height:38px;padding:2px;border:1px solid var(--line);border-radius:8px;background:var(--surface2);cursor:pointer;}
+.miniplayer{position:fixed;right:20px;bottom:20px;z-index:61;width:320px;max-width:calc(100vw - 40px);background:var(--surface);border:1px solid var(--line2);border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.25);padding:12px;display:none;} .miniplayer.show{display:block;}
+.mp-top{display:flex;align-items:center;gap:10px;} .mp-thumb{width:40px;height:40px;border-radius:8px;background:var(--surface3) center/cover no-repeat;flex:none;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--gold);}
+.mp-meta{flex:1;min-width:0;} .mp-t{font-weight:700;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;} .mp-s{font-size:11.5px;color:var(--mut);}
+.mp-x{width:28px;height:28px;border-radius:7px;border:1px solid var(--line2);background:var(--surface2);cursor:pointer;flex:none;}
+.mp-vol{display:flex;align-items:center;gap:8px;margin-top:10px;} .mp-vol input{flex:1;accent-color:var(--gold);}
+.miniplayer .player-frame{background:transparent;margin-top:8px;} .miniplayer .player-frame iframe{height:80px;} .miniplayer .player-frame.spbig iframe{height:152px;}
 /* fab */
 .fab{position:fixed;left:20px;bottom:20px;z-index:60;background:var(--surface);border:1px solid #1c5a34;border-radius:14px;padding:12px 14px;box-shadow:0 12px 40px rgba(0,0,0,.5);display:none;align-items:center;gap:12px;min-width:230px;} .fab.show{display:flex;} .fab .fi{width:34px;height:34px;border-radius:9px;background:var(--green-dim);display:flex;align-items:center;justify-content:center;color:var(--green);flex:none;} .fab .fn{font-size:12px;color:var(--mut);} .fab .ft{font-weight:800;font-size:16px;} .fab .fx{margin-left:auto;display:flex;gap:6px;} .fab .mini2{width:32px;height:32px;border-radius:8px;border:1px solid var(--line2);background:var(--surface2);cursor:pointer;} .fab .mini2:hover{border-color:var(--gold);} .fab .mini2.on{background:var(--gold);color:#1a1400;border-color:var(--gold);}
 #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);font-weight:700;padding:11px 20px;border-radius:24px;opacity:0;pointer-events:none;transition:.22s;z-index:95;box-shadow:0 12px 40px rgba(0,0,0,.4);} #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
@@ -154,6 +161,12 @@ body.light .cl-badge.B{background:#fde7e8;color:#c0343a;} body.light .cl-badge.Q
 </div>
 
 <div class="fab" id="fab"><div class="fi">⏱</div><div><div class="fn" id="fabN">Rodando · toque para voltar</div><div class="ft mono" id="fabT">—</div></div><div class="fx"><button class="mini2" id="bell" title="Sino de hora em hora">🔔</button><button class="mini2" id="fabGo" title="Abrir projeto">↗</button></div></div>
+<div class="miniplayer" id="miniPlayer">
+  <div class="mp-top"><div class="mp-thumb" id="mpThumb">🎵</div><div class="mp-meta"><div class="mp-t" id="mpTitle">—</div><div class="mp-s">Áudio de foco</div></div><button class="mp-x" onclick="stopAudio()" title="Parar">✕</button></div>
+  <div class="mp-vol" id="mpVolRow"><span>🔉</span><input type="range" id="mpVol" min="0" max="100" value="60" oninput="setVol(this.value)"><span>🔊</span></div>
+  <div id="ytHost" style="width:1px;height:1px;overflow:hidden;opacity:0;position:absolute;pointer-events:none"></div>
+  <div class="player-frame" id="mpFrameWrap" style="display:none"><iframe id="mpFrame" allow="autoplay; encrypted-media"></iframe></div>
+</div>
 
 <div class="dback" id="dback"></div>
 <aside class="draw" id="draw"><button class="close" onclick="closeDraw()">✕</button><div id="drawBody"></div></aside>
@@ -167,7 +180,7 @@ const LS={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;
 const KEY="central_editor_v1";
 const DEFAULTS={
   profile:{name:"Jean Alexandre (Xandão)",role:"Editor de Vídeo",email:"",team:"Edição — AUVP",photo:""},
-  prefs:{profile:"ambar",customProfile:null,bell:true,defaultFlow:"Padrão",processes:["Decupagem","Corte","Trilha","Motion","Export","Revisão"]},
+  prefs:{profile:"ambar",customProfile:null,bell:true,defaultFlow:"Padrão",processes:["Decupagem","Corte","Trilha","Motion","Export","Revisão"],spotifyClientId:"",spotifyToken:null},
   channels:[
     {n:"Investidor Sardinha",u:"https://www.youtube.com/@investidorsardinha"},
     {n:"AUVP Capital",u:"https://www.youtube.com/@AUVPCapital"},
@@ -178,7 +191,8 @@ const DEFAULTS={
   ],
   reportFolders:[{label:"2026 (ano)",link:""}],
   projects:[],
-  savedReports:[]
+  savedReports:[],
+  trash:[]
 };
 let DB=Object.assign(JSON.parse(JSON.stringify(DEFAULTS)), LS.get(KEY,{}));
 // merge prefs/profile defaults se faltar chave
@@ -186,6 +200,7 @@ DB.profile=Object.assign({},DEFAULTS.profile,DB.profile);
 DB.prefs=Object.assign({},DEFAULTS.prefs,DB.prefs);
 if(!DB.channels||!DB.channels.length)DB.channels=DEFAULTS.channels.slice();
 if(!DB.reportFolders)DB.reportFolders=DEFAULTS.reportFolders.slice();
+if(!DB.trash)DB.trash=[];
 function save(){LS.set(KEY,DB);}
 
 /* ===== Categorias: Canal -> Programas ===== */
@@ -409,7 +424,7 @@ function toggleEditTime(id){const el=$("#edit-"+id);const t=getTimer(id);if(!el)
 function saveEditTime(id){const t=getTimer(id);const h=+($("#eh-"+id).value||0),m=+($("#em-"+id).value||0),s=+($("#es-"+id).value||0);const total=h*3600+m*60+s;const before=fmt(elapsed(t));t.accumulated=total;if(t.status==='running')t.startedAt=Date.now();tHist(t,'Ajuste manual do total: '+before+' → '+fmt(total)+'.');save();renderTimers();updateProjectKpis();toast("Tempo ajustado.");}
 function addTimePrompt(id){const t=getTimer(id);const v=prompt("Adicionar quantos minutos?","15");const min=parseFloat((v||"").replace(",","."));if(!min||min<=0)return;t.accumulated=(t.accumulated||0)+min*60;tHist(t,'Adicionou +'+min+' min manualmente.');save();renderTimers();updateProjectKpis();toast("+"+min+" min.");}
 function wipeTime(id){const t=getTimer(id);confirmAction('Zerar o tempo deste cronômetro? A ação fica registrada no histórico.',()=>{const before=fmt(elapsed(t));t.accumulated=0;if(t.status==='running')t.startedAt=Date.now();tHist(t,'Tempo zerado (era '+before+').');save();renderTimers();updateProjectKpis();toast("Tempo zerado.");});}
-function deleteTimer(id){const t=getTimer(id);confirmAction('Excluir o cronômetro "'+(t?t.name:'')+'"? Ele será removido do projeto.',()=>{const p=getProject(openProjectId);p.timers=p.timers.filter(x=>x.id!==id);save();renderTimers();updateProjectKpis();refreshFab();toast("Cronômetro excluído.");});}
+function deleteTimer(id){const t=getTimer(id);confirmAction('Excluir o cronômetro "'+(t?t.name:'')+'"? Ele vai para a lixeira e pode ser restaurado.',()=>{const p=getProject(openProjectId);p.timers=p.timers.filter(x=>x.id!==id);DB.trash.unshift({type:'timer',data:t,projectId:p.id,projectName:p.nome,at:Date.now()});save();renderTimers();updateProjectKpis();refreshFab();toast("Cronômetro na lixeira.");});}
 function updateProjectKpis(){const p=getProject(openProjectId);if(!p||current!=='projeto')return;const tot=$("#pTotal");if(tot)tot.textContent=fmt(projectTotal(p));}
 
 /* comentários e histórico (drawer) */
@@ -430,7 +445,12 @@ function openDraw(){$("#draw").classList.add('show');$("#dback").classList.add('
 function closeDraw(){$("#draw").classList.remove('show');$("#dback").classList.remove('show');}
 $("#dback").onclick=()=>{closeDraw();closeModal();};
 
-function delProject(id){confirmAction('Excluir este projeto? Esta ação não pode ser desfeita.',()=>{DB.projects=DB.projects.filter(p=>p.id!==id);save();if(current==='projetos')drawProjectCards();else go('projetos');toast("Projeto excluído.");});}
+function delProject(id){confirmAction('Excluir este projeto? Ele vai para a lixeira e pode ser restaurado.',()=>{const p=getProject(id);if(p)DB.trash.unshift({type:'project',data:p,at:Date.now()});DB.projects=DB.projects.filter(x=>x.id!==id);save();if(current==='projetos')drawProjectCards();else go('projetos');toast("Projeto na lixeira.");});}
+function restoreTrash(i){const it=DB.trash[i];if(!it)return;if(it.type==='project'){DB.projects.unshift(it.data);DB.trash.splice(i,1);save();toast("Projeto restaurado.");}
+  else{const p=getProject(it.projectId);if(p){p.timers.push(it.data);DB.trash.splice(i,1);save();toast("Cronômetro restaurado.");}else{toast("O projeto original não existe mais. Restaure-o antes.");return;}}
+  renderConfig();}
+function purgeTrash(i){confirmAction('Excluir definitivamente? Não dá mais pra recuperar.',()=>{DB.trash.splice(i,1);save();renderConfig();toast("Excluído de vez.");});}
+function emptyTrash(){if(!DB.trash.length)return;confirmAction('Esvaziar a lixeira? Tudo será apagado para sempre.',()=>{DB.trash=[];save();renderConfig();toast("Lixeira vazia.");});}
 
 /* ============================ CHECKLIST ============================ */
 let clProjId=null,clStep=0;
@@ -546,10 +566,7 @@ const POMO_MIN={foco:25,pausa:5,longa:15};
 const POMO_LABEL={foco:'Foco',pausa:'Pausa curta',longa:'Pausa longa'};
 const POMO_COL={foco:'#e2b23c',pausa:'#4bb96a',longa:'#5b8def'};
 const AUDIO={
-  lofi:{label:'Lo-fi',opts:[
-    {t:'Lofi Girl · 24/7',url:'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&rel=0'},
-    {t:'Chillhop · 24/7',url:'https://www.youtube.com/embed/5yx6BWlEVcY?autoplay=1&rel=0'}
-  ]},
+  lofi:{label:'Lo-fi',opts:[{t:'Lofi Girl · 24/7',yt:'jfKfPfyJRdk'},{t:'Chillhop · 24/7',yt:'5yx6BWlEVcY'}]},
   spotify:{label:'Spotify',opts:[
     {t:'Deep Focus',url:'https://open.spotify.com/embed/playlist/37i9dQZF1DWZeKCadgRdKQ'},
     {t:'lofi beats',url:'https://open.spotify.com/embed/playlist/37i9dQZF1DWWQRwui0ExPn'},
@@ -558,7 +575,7 @@ const AUDIO={
   ]},
   natureza:{label:'Natureza',opts:[
     {t:'Nature Sounds (Spotify)',url:'https://open.spotify.com/embed/playlist/37i9dQZF1DX4PP3DA4J0N8'},
-    {t:'Chuva (YouTube)',url:'https://www.youtube.com/embed/mPZkdNFkNps?autoplay=1&rel=0'}
+    {t:'Chuva (YouTube)',yt:'mPZkdNFkNps'}
   ]}
 };
 function renderPomodoro(){
@@ -572,37 +589,96 @@ function renderPomodoro(){
        <div class="muted" style="margin-top:12px" id="pomoCycTxt"></div>
      </div>
      <div class="card"><div class="big">Áudio de concentração</div>
-       <div class="chips" style="margin-top:12px" id="audioCats"><span class="chip" onclick="showCat('lofi')">🎧 Lo-fi</span><span class="chip" onclick="showCat('spotify')">🎵 Spotify</span><span class="chip" onclick="showCat('natureza')">🌿 Natureza</span><a class="chip" href="https://radio.garden/" target="_blank" rel="noopener">🌍 Radio Garden ↗</a></div>
+       <div class="chips" style="margin-top:12px" id="audioCats"><span class="chip" onclick="showCat('lofi')">🎧 Lo-fi</span><span class="chip" onclick="showCat('spotify')">🎵 Spotify</span><span class="chip" onclick="showMySpotify()">🔓 Meu Spotify</span><span class="chip" onclick="showCat('natureza')">🌿 Natureza</span><a class="chip" href="https://radio.garden/" target="_blank" rel="noopener">🌍 Radio Garden ↗</a></div>
        <div id="audioOptions" style="margin-top:12px;display:none"></div>
        <div class="field" style="margin-top:16px"><label>Ou cole um link do Spotify (playlist/música), YouTube ou SoundCloud</label><div class="row" style="gap:8px"><input class="inp" id="pomoLink" placeholder="https://open.spotify.com/playlist/..."><button class="btn gold sm" onclick="playMyLink()">Tocar aqui</button></div></div>
-       <div id="playerWrap" style="margin-top:14px;display:none"><div class="row between" style="margin-bottom:8px"><div class="muted" id="playerLabel"></div><button class="mini" onclick="stopAudio()">⏹ Parar áudio</button></div><div class="player-frame" id="playerFrame"><iframe id="audioFrame" allow="autoplay; encrypted-media"></iframe></div></div>
-       <div class="note">Toca aqui dentro, na mesma página. No Spotify, com sua conta aberta no navegador toca a faixa inteira; sem login, toca a prévia de 30s. Se algum preset sair do ar, cole outro link.</div>
+       <div class="note">Escolha uma opção pra tocar. O áudio fica tocando <b>mesmo trocando de página</b>, no mini-player do canto — com título, capa e volume.</div>
      </div>
    </div>`;
   updatePomoSeg();renderCyc();pomoRingUpdate();
   $$("#pomoSeg button").forEach(b=>b.onclick=()=>pomoSetMode(b.dataset.m));
-  if(pomo._cat)showCat(pomo._cat);
-  if(pomo._audio)setAudio(pomo._audio.url,pomo._audio.label);
+  if(pomo._cat==='meuspotify')showMySpotify();else if(pomo._cat)showCat(pomo._cat);
 }
 function pomoFmt(){const m=Math.floor(pomo.remaining/60),s=pomo.remaining%60;return pad(m)+":"+pad(s);}
 function updatePomoSeg(){$$("#pomoSeg button").forEach(b=>b.classList.toggle('on',b.dataset.m===pomo.mode));}
 function renderCyc(){const c=$("#pomoCyc");if(c)c.innerHTML=[0,1,2,3].map(i=>`<i class="${i<pomo.cycles%4?'on':''}"></i>`).join("");const t=$("#pomoCycTxt");if(t)t.textContent=pomo.cycles+' ciclo(s) de foco hoje';}
 function pomoRingUpdate(){const fg=$("#pringFg");if(!fg)return;const C=2*Math.PI*54;const total=POMO_MIN[pomo.mode]*60;const prog=Math.min(1,Math.max(0,1-pomo.remaining/total));fg.style.strokeDasharray=C.toFixed(1);fg.style.strokeDashoffset=(C*(1-prog)).toFixed(1);fg.style.stroke=POMO_COL[pomo.mode];fg.style.color=POMO_COL[pomo.mode];const w=$("#pomoRing");if(w)w.classList.toggle('run',pomo.running);}
-function showCat(cat){pomo._cat=cat;const box=$("#audioOptions");if(!box)return;const a=AUDIO[cat];box.style.display='block';box.innerHTML=`<div class="muted" style="margin-bottom:8px">${a.label} — escolha uma opção:</div><div class="chips">${a.opts.map(o=>`<span class="chip" onclick="playAudio('${o.url}','${esc(a.label+' · '+o.t)}')">▶ ${esc(o.t)}</span>`).join("")}</div>`;}
-function playAudio(url,label){setAudio(url,label);}
+function showCat(cat){pomo._cat=cat;const box=$("#audioOptions");if(!box)return;const a=AUDIO[cat];box.style.display='block';box.innerHTML=`<div class="muted" style="margin-bottom:8px">${a.label} — escolha uma opção:</div><div class="chips">${a.opts.map((o,i)=>`<span class="chip" onclick="playOpt('${cat}',${i})">▶ ${esc(o.t)}</span>`).join("")}</div>`;}
+function playOpt(cat,i){const o=AUDIO[cat].opts[i];const label=AUDIO[cat].label+' · '+o.t;if(o.yt)playYouTube(o.yt,label);else playEmbed(o.url,label);}
 function pomoSetMode(m){pomo.mode=m;pomo.remaining=POMO_MIN[m]*60;pomo.running=false;clearInterval(pomo.timer);updatePomoSeg();$("#pomoT").textContent=pomoFmt();$("#pomoLbl").textContent=POMO_LABEL[m];$("#pomoStart").textContent='▶ Iniciar';pomoRingUpdate();}
 function pomoToggle(){pomo.running=!pomo.running;$("#pomoStart").textContent=pomo.running?'⏸ Pausar':'▶ Iniciar';pomoRingUpdate();
   if(pomo.running){pomo.timer=setInterval(()=>{pomo.remaining--;const el=$("#pomoT");if(el)el.textContent=pomoFmt();pomoRingUpdate();if(pomo.remaining<=0){clearInterval(pomo.timer);pomo.running=false;if(pomo.mode==='foco')pomo.cycles++;renderCyc();pomoRingUpdate();const s=$("#pomoStart");if(s)s.textContent='▶ Iniciar';beep();toast("Pomodoro concluído!");}},1000);}else clearInterval(pomo.timer);}
 function pomoReset(){clearInterval(pomo.timer);pomo.running=false;pomo.remaining=POMO_MIN[pomo.mode]*60;const el=$("#pomoT");if(el)el.textContent=pomoFmt();const s=$("#pomoStart");if(s)s.textContent='▶ Iniciar';pomoRingUpdate();}
 /* players integrados */
-function setAudio(url,label){pomo._audio={url,label};const w=$("#playerWrap");if(!w)return;w.style.display='block';$("#playerLabel").textContent=label;const f=$("#playerFrame");f.classList.remove('audio','spbig');if(/open\.spotify\.com\/embed\/(playlist|album)/.test(url))f.classList.add('spbig');else if(/open\.spotify\.com\/embed|soundcloud\.com/.test(url))f.classList.add('audio');if($("#audioFrame").src!==url)$("#audioFrame").src=url;}
-function stopAudio(){pomo._audio=null;const w=$("#playerWrap");if(w){w.style.display='none';$("#audioFrame").src='';}}
-function playMyLink(){const v=($("#pomoLink").value||'').trim();if(!v){toast("Cole um link primeiro.");return;}const e=parseEmbed(v);setAudio(e.url,e.label);}
-function parseEmbed(url){let m;
-  if(m=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/live\/)([\w-]{6,})/))return{url:'https://www.youtube.com/embed/'+m[1]+'?autoplay=1&rel=0',label:'YouTube'};
-  if(m=url.match(/open\.spotify\.com\/(?:intl-[a-z]+\/)?(track|playlist|album|episode|show)\/([\w]+)/))return{url:'https://open.spotify.com/embed/'+m[1]+'/'+m[2],label:'Spotify'};
-  if(url.includes('soundcloud.com'))return{url:'https://w.soundcloud.com/player/?url='+encodeURIComponent(url)+'&auto_play=true',label:'SoundCloud'};
-  return{url:url,label:'Seu link'};}
+let vol=60,ytPlayer=null,ytReady=false,pendingYT=null;
+function showMini(title,thumb,kind){const mp=$("#miniPlayer");if(!mp)return;mp.classList.add('show');$("#mpTitle").textContent=title;const th=$("#mpThumb");if(thumb){th.style.backgroundImage='url('+thumb+')';th.textContent='';}else{th.style.backgroundImage='';th.textContent='🎵';}$("#mpVolRow").style.display=(kind==='yt')?'flex':'none';$("#mpFrameWrap").style.display=(kind==='embed')?'block':'none';}
+function loadYTApi(cb){if(window.YT&&window.YT.Player){cb();return;}window.onYouTubeIframeAPIReady=cb;if(!document.getElementById('ytapi')){const s=document.createElement('script');s.id='ytapi';s.src='https://www.youtube.com/iframe_api';document.body.appendChild(s);}}
+function playYouTube(id,label){$("#mpFrame").src='';showMini(label,'https://img.youtube.com/vi/'+id+'/mqdefault.jpg','yt');
+  if(ytReady&&ytPlayer){ytPlayer.loadVideoById(id);ytPlayer.setVolume(vol);return;}
+  pendingYT=id;loadYTApi(()=>{if(!ytPlayer){ytPlayer=new YT.Player('ytHost',{height:'0',width:'0',playerVars:{autoplay:1},events:{onReady:()=>{ytReady=true;if(pendingYT){ytPlayer.loadVideoById(pendingYT);ytPlayer.setVolume(vol);pendingYT=null;}}}});}});
+}
+function playEmbed(url,label){try{ytPlayer&&ytReady&&ytPlayer.stopVideo();}catch(e){}showMini(label,'','embed');const f=$("#mpFrameWrap");f.classList.toggle('spbig',/open\.spotify\.com\/embed\/(playlist|album)/.test(url));if($("#mpFrame").src!==url)$("#mpFrame").src=url;}
+function stopAudio(){const mp=$("#miniPlayer");if(mp)mp.classList.remove('show');try{ytPlayer&&ytReady&&ytPlayer.stopVideo();}catch(e){}const f=$("#mpFrame");if(f)f.src='';}
+function setVol(v){vol=+v;try{ytPlayer&&ytReady&&ytPlayer.setVolume(vol);}catch(e){}try{spPlayer&&spPlayer.setVolume&&spPlayer.setVolume(vol/100);}catch(e){}}
+function playMyLink(){const v=($("#pomoLink").value||'').trim();if(!v){toast("Cole um link primeiro.");return;}const e=parseLink(v);if(e.type==='yt')playYouTube(e.id,e.title);else playEmbed(e.url,e.title);}
+function parseLink(url){let m;
+  if(m=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/live\/)([\w-]{6,})/))return{type:'yt',id:m[1],title:'YouTube'};
+  if(m=url.match(/open\.spotify\.com\/(?:intl-[a-z]+\/)?(track|playlist|album|episode|show)\/([\w]+)/))return{type:'embed',url:'https://open.spotify.com/embed/'+m[1]+'/'+m[2],title:'Spotify'};
+  if(url.includes('soundcloud.com'))return{type:'embed',url:'https://w.soundcloud.com/player/?url='+encodeURIComponent(url)+'&auto_play=true',title:'SoundCloud'};
+  return{type:'embed',url:url,title:'Seu link'};}
+
+/* ===== Meu Spotify (login + playlists + player) ===== */
+const SP_SCOPES='streaming user-read-email user-read-private playlist-read-private playlist-read-collaborative user-modify-playback-state user-read-playback-state';
+let spPlayer=null,spDeviceId=null,spAccountError=false,spProfileName='';
+function spRedirect(){return location.origin+location.pathname;}
+function spRandom(n){const a=new Uint8Array(n);crypto.getRandomValues(a);return Array.from(a,b=>('0'+(b&0xff).toString(16)).slice(-2)).join('').slice(0,n);}
+async function showMySpotify(){pomo._cat='meuspotify';const box=$("#audioOptions");if(box){box.style.display='block';}spRenderPanel();}
+function spSaveCid(){const v=($("#spCid").value||'').trim();if(!v){toast('Cole o Client ID.');return;}DB.prefs.spotifyClientId=v;save();spRenderPanel();}
+function spResetCid(){DB.prefs.spotifyClientId='';DB.prefs.spotifyToken=null;save();spRenderPanel();}
+function spLogout(){DB.prefs.spotifyToken=null;save();try{spPlayer&&spPlayer.disconnect();}catch(e){}spPlayer=null;spDeviceId=null;spAccountError=false;spRenderPanel();toast('Spotify desconectado.');}
+async function spConnect(){const cid=DB.prefs.spotifyClientId;if(!cid){toast('Cole o Client ID primeiro.');return;}
+  const verifier=spRandom(64);const enc=new TextEncoder().encode(verifier);const digest=await crypto.subtle.digest('SHA-256',enc);
+  const challenge=btoa(String.fromCharCode(...new Uint8Array(digest))).replace(/=+$/,'').replace(/\+/g,'-').replace(/\//g,'_');
+  localStorage.setItem('sp_verifier',verifier);
+  location.href='https://accounts.spotify.com/authorize?'+new URLSearchParams({client_id:cid,response_type:'code',redirect_uri:spRedirect(),scope:SP_SCOPES,code_challenge_method:'S256',code_challenge:challenge});
+}
+async function spHandleRedirect(){const params=new URLSearchParams(location.search);const code=params.get('code');if(!code)return;
+  const verifier=localStorage.getItem('sp_verifier');
+  try{const body=new URLSearchParams({client_id:DB.prefs.spotifyClientId,grant_type:'authorization_code',code,redirect_uri:spRedirect(),code_verifier:verifier});
+    const r=await fetch('https://accounts.spotify.com/api/token',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body});
+    const j=await r.json();if(j.access_token){DB.prefs.spotifyToken={access:j.access_token,refresh:j.refresh_token,exp:Date.now()+j.expires_in*1000};save();toast('Spotify conectado!');}
+  }catch(e){}
+  history.replaceState({},'',spRedirect());
+}
+async function spGetToken(){let t=DB.prefs.spotifyToken;if(!t)return null;if(Date.now()<t.exp-60000)return t.access;if(!t.refresh)return t.access;
+  try{const body=new URLSearchParams({client_id:DB.prefs.spotifyClientId,grant_type:'refresh_token',refresh_token:t.refresh});
+    const r=await fetch('https://accounts.spotify.com/api/token',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body});
+    const j=await r.json();if(j.access_token){t.access=j.access_token;t.exp=Date.now()+j.expires_in*1000;if(j.refresh_token)t.refresh=j.refresh_token;DB.prefs.spotifyToken=t;save();}
+  }catch(e){}return DB.prefs.spotifyToken.access;}
+async function spApi(path,method,body){const token=await spGetToken();if(!token)throw 'no token';
+  const r=await fetch('https://api.spotify.com/v1'+path,{method:method||'GET',headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined});
+  if(r.status===204)return null;const txt=await r.text();return txt?JSON.parse(txt):null;}
+function spLoadSDK(cb){if(window.Spotify){cb();return;}window.onSpotifyWebPlaybackSDKReady=cb;if(!document.getElementById('spSdk')){const s=document.createElement('script');s.id='spSdk';s.src='https://sdk.scdn.co/spotify-player.js';document.body.appendChild(s);}}
+async function spInitPlayer(){if(spPlayer)return;const token=await spGetToken();if(!token)return;
+  spLoadSDK(()=>{try{spPlayer=new Spotify.Player({name:'Central do Editor',getOAuthToken:async cb=>cb(await spGetToken()),volume:.6});
+    spPlayer.addListener('ready',({device_id})=>{spDeviceId=device_id;});
+    spPlayer.addListener('account_error',()=>{spAccountError=true;if(pomo._cat==='meuspotify')spRenderPanel();});
+    spPlayer.connect();}catch(e){}});
+}
+async function spPlay(uri){try{if(!spDeviceId){toast('Player carregando... tente de novo em alguns segundos.');spInitPlayer();return;}await spApi('/me/player/play?device_id='+spDeviceId,'PUT',{context_uri:uri});toast('Tocando no Spotify.');}catch(e){toast('Não consegui tocar (o player embutido precisa de Premium).');}}
+function spTogglePlay(){try{spPlayer&&spPlayer.togglePlay();}catch(e){}}
+function spRenderPanel(){const box=$("#audioOptions");if(!box||pomo._cat!=='meuspotify')return;
+  const cid=DB.prefs.spotifyClientId,tok=DB.prefs.spotifyToken,rd=spRedirect();
+  if(!cid){box.innerHTML=`<div class="muted" style="margin-bottom:8px">Conectar meu Spotify (configuração única):</div><div class="note" style="margin-top:0">1) Abra o <a href="https://developer.spotify.com/dashboard" target="_blank" rel="noopener">Spotify Developer Dashboard</a> e crie um app (qualquer nome).<br>2) Em <b>Redirect URIs</b>, cole exatamente: <code>${esc(rd)}</code><br>3) Marque <b>Web Playback SDK</b>, salve, copie o <b>Client ID</b> e cole abaixo.</div><div class="row" style="gap:8px;margin-top:10px"><input class="inp" id="spCid" placeholder="Client ID do seu app Spotify"><button class="btn gold sm" onclick="spSaveCid()">Salvar</button></div>`;return;}
+  if(!tok){box.innerHTML=`<div class="muted" style="margin-bottom:8px">Client ID salvo. Agora conecte sua conta:</div><div class="row" style="gap:8px"><button class="btn gold sm" onclick="spConnect()">🔓 Conectar Spotify</button><button class="btn ghost sm" onclick="spResetCid()">Trocar Client ID</button></div><div class="note">Para tocar as faixas inteiras aqui dentro é preciso Spotify <b>Premium</b>.</div>`;return;}
+  spInitPlayer();
+  box.innerHTML=`<div class="row between"><div class="muted" id="spWho">Conectado</div><div class="row" style="gap:6px"><button class="mini" onclick="spTogglePlay()">⏯ Play/Pause</button><button class="mini" onclick="spLogout()">Desconectar</button></div></div>${spAccountError?'<div class="note" style="border-color:var(--red)">Sua conta não é Premium — o player embutido do Spotify exige Premium para tocar. Dá pra ver as playlists, mas o play acontece no app do Spotify.</div>':''}<div class="sp-list" id="spList"><div class="muted">Carregando suas playlists...</div></div>`;
+  spLoadProfile();spLoadPlaylists();
+}
+async function spLoadProfile(){try{const me=await spApi('/me');spProfileName=(me&&me.display_name)||'';const w=$("#spWho");if(w&&spProfileName)w.textContent='Conectado · '+spProfileName;}catch(e){}}
+async function spLoadPlaylists(){const el=$("#spList");try{const j=await spApi('/me/playlists?limit=50');if(!el)return;if(!j||!j.items||!j.items.length){el.innerHTML='<div class="muted">Nenhuma playlist encontrada.</div>';return;}
+  el.innerHTML=j.items.map(pl=>`<div class="sp-item" onclick="spPlay('${pl.uri}')"><img src="${pl.images&&pl.images[0]?pl.images[0].url:''}" alt=""><div><div style="font-size:13.5px;font-weight:600">${esc(pl.name)}</div><div class="muted" style="font-size:11.5px">${pl.tracks?pl.tracks.total:0} faixas</div></div></div>`).join('');
+  }catch(e){if(el)el.innerHTML='<div class="muted">Não consegui carregar as playlists. Tente desconectar e conectar de novo.</div>';}}
 
 /* ============================ CONFIGURAÇÕES ============================ */
 function renderConfig(){
@@ -627,6 +703,9 @@ function renderConfig(){
    </div></div>
    <div class="set-sec"><div class="card"><h3>Relatórios salvos</h3><div class="muted" style="margin-top:4px">Registro das exportações que você gerou.</div>
      <table class="tbl"><thead><tr><th>Período</th><th>Gerado em</th><th>Projetos</th><th>Tempo</th></tr></thead><tbody>${DB.savedReports.length?DB.savedReports.map(r=>`<tr><td>${esc(r.periodo)}</td><td>${esc(r.at)}</td><td>${r.projetos}</td><td class="mono">${esc(r.tempo)}</td></tr>`).join(""):'<tr><td colspan="4" class="muted">Nenhuma exportação ainda.</td></tr>'}</tbody></table>
+   </div></div>
+   <div class="set-sec"><div class="card"><div class="row between"><h3>Lixeira</h3>${DB.trash.length?`<button class="btn ghost sm" onclick="emptyTrash()">Esvaziar lixeira</button>`:''}</div><div class="muted" style="margin-top:4px">Projetos e cronômetros excluídos ficam aqui. Dá pra restaurar ou apagar de vez.</div>
+     ${DB.trash.length?`<table class="tbl"><thead><tr><th>Item</th><th>Tipo</th><th>Excluído em</th><th></th></tr></thead><tbody>${DB.trash.map((it,i)=>`<tr><td>${esc(it.type==='project'?it.data.nome:(it.data.name+' — '+(it.projectName||'')))}</td><td>${it.type==='project'?'Projeto':'Cronômetro'}</td><td>${new Date(it.at).toLocaleString('pt-BR')}</td><td style="white-space:nowrap"><button class="mini" onclick="restoreTrash(${i})">↩ Restaurar</button> <button class="mini" onclick="purgeTrash(${i})">🗑</button></td></tr>`).join("")}</tbody></table>`:'<div class="muted" style="margin-top:10px">Lixeira vazia.</div>'}
    </div></div>
    <div class="set-sec"><div class="card"><h3>Backup e segurança</h3><div class="muted" style="margin-top:4px">Baixe uma cópia de todos os seus dados (projetos, tempos, comentários e histórico).</div>
      <div class="row wrapf" style="gap:8px;margin-top:14px"><button class="btn gold sm" onclick="backupDownload()">⬇ Baixar backup completo</button><input type="file" id="importIn" accept="application/json" style="display:none"><button class="btn ghost sm" onclick="document.getElementById('importIn').click()">Importar backup</button></div>
@@ -723,6 +802,7 @@ window.addEventListener('beforeunload',save);
 
 /* ============================ INIT ============================ */
 applyProfile(DB.prefs.profile||'ambar');
+if(typeof spHandleRedirect==='function')spHandleRedirect();
 refreshProfile();
 renderProjetos();
 </script>
