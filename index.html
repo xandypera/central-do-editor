@@ -222,7 +222,8 @@ function save(){LS.set(KEY,DB);}
 /* ===== Categorias: Canal -> Programas ===== */
 const CATEGORIES={
   "Investidor Sardinha":["Diário - IS","Quadro - IS","Giro da Bolsa","Gaveta"],
-  "AUVP Capital":["A definir"]
+  "AUVP Capital":["A definir"],
+  "Interno / Outro":["Interno","Outro"]
 };
 const _TIPO_MIGRA={"Diário":"Diário - IS","Quadro":"Quadro - IS","Giro":"Giro da Bolsa","Gaveta":"Gaveta","Outro":"A definir"};
 DB.projects.forEach(p=>{ if(!p.canal){ p.canal="Investidor Sardinha"; p.programa=_TIPO_MIGRA[p.tipo]||p.tipo||"Diário - IS"; } if(!p.programa)p.programa=p.tipo||"Diário - IS"; });
@@ -322,7 +323,7 @@ function drawProjectCards(){
   $("#pEmpty").style.display=list.length?"none":"block";
   grid.innerHTML=list.map(p=>`
     <div class="card hoverable" onclick="openProject('${p.id}')">
-      <div class="row between"><div><div class="big" style="font-size:16px">${esc(p.nome)}</div><div class="muted">${esc(p.canal||'')} · ${p.data?fmtDateBR(p.data):'Sem data'}</div></div><span class="pill ${programaClass(p.programa)}">${esc(p.programa||'')}</span></div>
+      <div class="row between"><div><div class="big" style="font-size:16px">${esc(p.nome)}</div><div class="muted">${esc(canalLabel(p))} · ${p.data?fmtDateBR(p.data):'Sem data'}</div></div><span class="pill ${programaClass(p.programa)}">${esc(programaLabel(p))}</span></div>
       <div class="row between" style="margin-top:16px"><span class="muted">Tempo total</span><span class="kpi mono">${fmt(projectTotal(p))}</span></div>
       <div class="muted" style="margin-top:10px">Checklist · ${checklistPct(p)}%</div><div class="bar"><i style="width:${checklistPct(p)}%"></i></div>
       <div class="row" style="margin-top:14px;gap:6px"><span class="pill">${p.timers.length} cronômetro(s)</span><span class="pill ${p.status==='publicado'?'':'g'}">${esc(p.status||'em edição')}</span><button class="mini" style="margin-left:auto" title="Excluir projeto" onclick="event.stopPropagation();delProject('${p.id}')">🗑</button></div>
@@ -330,33 +331,42 @@ function drawProjectCards(){
 }
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 
-function newProjectModal(){
-  const today=new Date().toISOString().slice(0,10);
-  $("#modalBody").innerHTML=`
-    <h3>Novo projeto</h3><div class="muted">Preencha os dados do vídeo. O link do Drive fica sempre à mão.</div>
+function canalLabel(p){return (p.canalTxt||p.canal||'').trim();}
+function programaLabel(p){return (p.programaTxt||p.programa||'').trim();}
+function projectFormHTML(p){
+  const today=new Date().toISOString().slice(0,10);p=p||{};
+  const canais=Object.keys(CATEGORIES);const curCanal=p.canal||canais[0];
+  return `<h3>${p.id?'Editar projeto':'Novo projeto'}</h3><div class="muted">Preencha os dados. Dá pra guardar vários links (Drive, roteiro, bruto...).</div>
     <div class="frow" style="margin-top:8px">
-      <div class="field"><label>Nome do vídeo</label><input class="inp" id="npNome" placeholder="Ex: Giro da Bolsa 14-09"></div>
-      <div class="field"><label>Editor</label><input class="inp" id="npEditor" value="${esc(DB.profile.name)}"></div>
-      <div class="field"><label>Data</label><input class="inp" id="npData" type="date" value="${today}"></div>
-      <div class="field"><label>Canal</label><select class="inp" id="npCanal" onchange="npUpdatePrograma()">${Object.keys(CATEGORIES).map(c=>`<option>${esc(c)}</option>`).join("")}</select></div>
+      <div class="field"><label>Nome</label><input class="inp" id="npNome" placeholder="Ex: Giro da Bolsa 14-09" value="${esc(p.nome||'')}"></div>
+      <div class="field"><label>Editor</label><input class="inp" id="npEditor" value="${esc(p.editor!=null?p.editor:DB.profile.name)}"></div>
+      <div class="field"><label>Data</label><input class="inp" id="npData" type="date" value="${esc(p.data!=null?p.data:today)}"></div>
+      <div class="field"><label>Canal / Categoria</label><select class="inp" id="npCanal" onchange="npUpdatePrograma()">${canais.map(c=>`<option ${c===curCanal?'selected':''}>${esc(c)}</option>`).join("")}</select></div>
+      <div class="field" id="npCanalTxtWrap" style="display:none"><label>Descreva (o que é?)</label><input class="inp" id="npCanalTxt" placeholder="Ex: Reunião, Treinamento, Arte" value="${esc(p.canalTxt||'')}"></div>
       <div class="field"><label>Programa</label><select class="inp" id="npPrograma"></select></div>
+      <div class="field" id="npProgramaTxtWrap" style="display:none"><label>Descreva o programa</label><input class="inp" id="npProgramaTxt" placeholder="Ex: Institucional" value="${esc(p.programaTxt||'')}"></div>
       <div class="field"><label>Fluxo</label><select class="inp" id="npFluxo"><option>Padrão</option><option>Urgente</option></select></div>
-      <div class="field"><label>Link da pasta no Drive</label><input class="inp" id="npDrive" placeholder="https://drive.google.com/..."></div>
+      <div class="field"><label>Link da pasta no Drive</label><div class="row" style="gap:6px"><input class="inp" id="npDrive" placeholder="https://drive.google.com/..." value="${esc(p.drive||'')}"><button class="btn ghost sm" title="Adicionar outro link" onclick="addLinkRow()">＋</button></div></div>
     </div>
-    <div class="field"><label>Observações</label><textarea class="inp" id="npObs" placeholder="opcional" style="min-height:60px"></textarea></div>
-    <div class="muted" id="npGavetaNote" style="margin-top:8px;display:none">Gaveta: a data pode ficar em branco (vídeo sem data de saída). Você define depois ao publicar.</div>
-    <div class="row" style="gap:8px;margin-top:16px;justify-content:flex-end"><button class="btn ghost" onclick="closeModal()">Cancelar</button><button class="btn gold" onclick="createProject()">Criar projeto</button></div>`;
-  $("#npFluxo").value=DB.prefs.defaultFlow||"Padrão";
-  npUpdatePrograma();
-  openModal();
+    <div id="npLinks"></div>
+    <div class="field"><label>Observações</label><textarea class="inp" id="npObs" placeholder="opcional" style="min-height:60px">${esc(p.obs||'')}</textarea></div>
+    <div class="muted" id="npGavetaNote" style="margin-top:8px;display:none">Gaveta: a data pode ficar em branco (sem data de saída). Você define depois ao publicar.</div>
+    <div class="row" style="gap:8px;margin-top:16px;justify-content:flex-end"><button class="btn ghost" onclick="closeModal()">Cancelar</button><button class="btn gold" onclick="saveProjectForm(${p.id?`'${p.id}'`:'null'})">${p.id?'Salvar':'Criar projeto'}</button></div>`;
 }
-function npUpdatePrograma(){const canal=$("#npCanal").value;const sel=$("#npPrograma");sel.innerHTML=(CATEGORIES[canal]||[]).map(pr=>`<option>${esc(pr)}</option>`).join("");npToggleGaveta();sel.onchange=npToggleGaveta;}
-function npToggleGaveta(){const isGav=$("#npPrograma").value==="Gaveta";const n=$("#npGavetaNote");if(n)n.style.display=isGav?'block':'none';}
-function createProject(){
+function newProjectModal(){$("#modalBody").innerHTML=projectFormHTML(null);$("#npFluxo").value=DB.prefs.defaultFlow||"Padrão";npUpdatePrograma();openModal();}
+function editProject(id){const p=getProject(id);if(!p)return;$("#modalBody").innerHTML=projectFormHTML(p);$("#npFluxo").value=p.fluxo||"Padrão";npUpdatePrograma(p.programa);(p.links||[]).forEach(l=>addLinkRow(l.label,l.url));openModal();}
+function npUpdatePrograma(preselect){const canal=$("#npCanal").value;const sel=$("#npPrograma");sel.innerHTML=(CATEGORIES[canal]||[]).map(pr=>`<option ${pr===preselect?'selected':''}>${esc(pr)}</option>`).join("");const cw=$("#npCanalTxtWrap");if(cw)cw.style.display=(canal==='Interno / Outro')?'block':'none';npToggleProg();sel.onchange=npToggleProg;}
+function npToggleProg(){const pr=$("#npPrograma").value;const pw=$("#npProgramaTxtWrap");if(pw)pw.style.display=(pr==='Interno'||pr==='Outro')?'block':'none';const n=$("#npGavetaNote");if(n)n.style.display=(pr==='Gaveta')?'block':'none';}
+function addLinkRow(label,url){const box=$("#npLinks");if(!box)return;const div=document.createElement('div');div.className='row link-row';div.style.gap='6px';div.style.marginTop='8px';div.innerHTML=`<input class="inp lk-label" placeholder="Nome (ex: Roteiro)" value="${esc(label||'')}" style="max-width:190px"><input class="inp lk-url" placeholder="https://..." value="${esc(url||'')}"><button class="btn ghost sm" title="Remover" onclick="this.parentNode.remove()">✕</button>`;box.appendChild(div);}
+function collectLinks(){return $$("#npLinks .link-row").map(r=>({label:r.querySelector('.lk-label').value.trim(),url:r.querySelector('.lk-url').value.trim()})).filter(l=>l.url);}
+function saveProjectForm(id){
   const nome=$("#npNome").value.trim()||"(sem nome)";
-  const programa=$("#npPrograma").value;const data=$("#npData").value||(programa==="Gaveta"?"":new Date().toISOString().slice(0,10));
-  const p={id:uid(),nome,editor:$("#npEditor").value.trim(),data,canal:$("#npCanal").value,programa,fluxo:$("#npFluxo").value,drive:$("#npDrive").value.trim(),obs:$("#npObs").value.trim(),status:"em edição",createdAt:Date.now(),timers:[],checklist:emptyChecklist()};
-  DB.projects.unshift(p);save();closeModal();openProject(p.id);toast("Projeto criado.");
+  const canal=$("#npCanal").value;const canalTxt=(canal==='Interno / Outro')?$("#npCanalTxt").value.trim():'';
+  const programa=$("#npPrograma").value;const programaTxt=(programa==='Interno'||programa==='Outro')?$("#npProgramaTxt").value.trim():'';
+  const data=$("#npData").value||(programa==='Gaveta'?'':new Date().toISOString().slice(0,10));
+  const base={nome,editor:$("#npEditor").value.trim(),data,canal,canalTxt,programa,programaTxt,fluxo:$("#npFluxo").value,drive:$("#npDrive").value.trim(),links:collectLinks(),obs:$("#npObs").value.trim()};
+  if(id){const p=getProject(id);if(p){Object.assign(p,base);save();closeModal();openProject(id);toast("Projeto atualizado.");}}
+  else{const p=Object.assign({id:uid(),status:"em edição",createdAt:Date.now(),timers:[],checklist:emptyChecklist()},base);DB.projects.unshift(p);save();closeModal();openProject(p.id);toast("Projeto criado.");}
 }
 
 /* ============================ PROJETO ABERTO ============================ */
@@ -368,9 +378,9 @@ function renderProjeto(){
   const running=p.timers.find(t=>t.status==='running');
   $("#s-projeto").innerHTML=`
     <div class="row between wrapf">
-      <div><div class="row" style="gap:10px"><button class="btn ghost sm" onclick="go('projetos')">← Projetos</button><h1 style="font-size:23px">${esc(p.nome)}</h1><span class="pill">${esc(p.canal||'')}</span><span class="pill ${tipoClass}">${esc(p.programa||'')}</span><span class="pill ${p.status==='publicado'?'':'g'}">${esc(p.status)}</span></div>
+      <div><div class="row" style="gap:10px"><button class="btn ghost sm" onclick="go('projetos')">← Projetos</button><h1 style="font-size:23px">${esc(p.nome)}</h1><span class="pill">${esc(canalLabel(p))}</span><span class="pill ${tipoClass}">${esc(programaLabel(p))}</span><span class="pill ${p.status==='publicado'?'':'g'}">${esc(p.status)}</span></div>
       <div class="sub">${p.data?fmtDateBR(p.data):'Sem data'} · Editor: ${esc(p.editor||'—')}</div></div>
-      <div class="row" style="gap:8px">${p.drive?`<button class="btn ghost sm" onclick="openLink('${encodeURI(p.drive)}')">📁 Abrir Drive</button>`:''}<button class="btn ghost sm" onclick="go('relatorio')">Exportar</button><button class="btn ghost sm" onclick="delProject('${p.id}')">🗑 Excluir</button></div>
+      <div class="row wrapf" style="gap:8px">${p.drive?`<button class="btn ghost sm" onclick="openLink('${encodeURI(p.drive)}')">📁 Abrir Drive</button>`:''}${(p.links||[]).map(l=>`<button class="btn ghost sm" onclick="openLink('${encodeURI(l.url)}')">🔗 ${esc(l.label||'Link')}</button>`).join("")}<button class="btn ghost sm" onclick="editProject('${p.id}')">✎ Editar</button><button class="btn ghost sm" onclick="go('relatorio')">Exportar</button><button class="btn ghost sm" onclick="delProject('${p.id}')">🗑 Excluir</button></div>
     </div>
     <div class="grid g4" style="margin-top:20px">
       <div class="card"><div class="muted">Tempo total</div><div class="kpi mono" id="pTotal" style="margin-top:4px">${fmt(projectTotal(p))}</div></div>
@@ -538,7 +548,7 @@ function renderRelatorio(){
   const procs=DB.prefs.processes;
   const list=DB.projects.filter(inPeriod);
   const stageTime=(p,name)=>p.timers.filter(t=>t.name.trim().toLowerCase()===name.toLowerCase()).reduce((a,t)=>a+elapsed(t),0);
-  const rows=list.map(p=>`<tr><td>${p.data?fmtDateBR(p.data):'—'}</td><td>${esc(p.nome)}</td><td>${esc(p.canal||'—')}</td><td>${esc(p.programa||'—')}</td><td>${esc(p.editor||'—')}</td>${procs.map(pr=>{const s=stageTime(p,pr);return `<td class="mono">${s?fmtShort(s):'—'}</td>`;}).join("")}<td class="mono">${fmtShort(projectTotal(p))}</td><td>${checklistPct(p)}%</td></tr>`).join("");
+  const rows=list.map(p=>`<tr><td>${p.data?fmtDateBR(p.data):'—'}</td><td>${esc(p.nome)}</td><td>${esc(canalLabel(p)||'—')}</td><td>${esc(programaLabel(p)||'—')}</td><td>${esc(p.editor||'—')}</td>${procs.map(pr=>{const s=stageTime(p,pr);return `<td class="mono">${s?fmtShort(s):'—'}</td>`;}).join("")}<td class="mono">${fmtShort(projectTotal(p))}</td><td>${checklistPct(p)}%</td></tr>`).join("");
   const totalAll=list.reduce((a,p)=>a+projectTotal(p),0);
   $("#s-relatorio").innerHTML=`
    <div class="row between wrapf"><div><h1>Relatório</h1><div class="sub">Todos os dados por período (menos o Pomodoro). Exporta pra planilha.</div></div>
@@ -559,7 +569,7 @@ function exportXLS(){
   h+=`<tr><td colspan="${nCols}">Editor: ${xesc(DB.profile.name)} &nbsp;|&nbsp; Período: ${perLabel} &nbsp;|&nbsp; Gerado em: ${new Date().toLocaleString('pt-BR')}</td></tr>`;
   h+=`<tr><td colspan="${nCols}"></td></tr>`;
   h+=`<tr style="font-weight:bold;background:#dddddd"><td>Data</td><td>Projeto</td><td>Canal</td><td>Programa</td><td>Editor</td><td>Fluxo</td>${procs.map(p=>`<td>${xesc(p)}</td>`).join("")}<td>Total</td><td>Checklist %</td><td>Link Drive</td></tr>`;
-  list.forEach(p=>{h+=`<tr><td>${p.data?fmtDateBR(p.data):'—'}</td><td>${xesc(p.nome)}</td><td>${xesc(p.canal)}</td><td>${xesc(p.programa)}</td><td>${xesc(p.editor)}</td><td>${xesc(p.fluxo)}</td>${procs.map(pr=>{const s=stageTime(p,pr);return `<td>${s?fmt(s):'—'}</td>`;}).join("")}<td>${fmt(projectTotal(p))}</td><td>${checklistPct(p)}%</td><td>${xesc(p.drive)}</td></tr>`;});
+  list.forEach(p=>{h+=`<tr><td>${p.data?fmtDateBR(p.data):'—'}</td><td>${xesc(p.nome)}</td><td>${xesc(canalLabel(p))}</td><td>${xesc(programaLabel(p))}</td><td>${xesc(p.editor)}</td><td>${xesc(p.fluxo)}</td>${procs.map(pr=>{const s=stageTime(p,pr);return `<td>${s?fmt(s):'—'}</td>`;}).join("")}<td>${fmt(projectTotal(p))}</td><td>${checklistPct(p)}%</td><td>${xesc(p.drive)}</td></tr>`;});
   h+=`<tr style="font-weight:bold"><td colspan="${6+procs.length}">Total do período</td><td>${fmt(list.reduce((a,p)=>a+projectTotal(p),0))}</td><td></td><td></td></tr>`;
   h+=`</table><br><br>`;
   h+=`<table border="1" cellspacing="0" cellpadding="4"><tr><td colspan="6" style="font-weight:bold;background:#e2b23c">Detalhe por etapa</td></tr>`;
