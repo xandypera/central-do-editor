@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Central do Editor 0.2</title>
+<title>Central do Editor alpha</title>
 <style>
 :root{
   --bg:#F1EFE9;--surface:#FFFFFF;--surface2:#F6F4EE;--surface3:#EDEAE2;--line:#D9D5CC;--line2:#CBC6BB;
@@ -129,6 +129,50 @@ body.light .cl-badge.B{background:#fde7e8;color:#c0343a;} body.light .cl-badge.Q
 .pd-vol{display:flex;align-items:center;gap:6px;flex:1;min-width:120px;} .pd-vol input{flex:1;accent-color:var(--gold);}
 .pd-x{width:30px;height:30px;border-radius:8px;border:1px solid var(--line2);background:var(--surface2);cursor:pointer;}
 #playerSlot{margin-top:14px;} #playerSlot.on{min-height:60px;}
+.viewtog{display:inline-flex;border:1px solid var(--line2);border-radius:9px;overflow:hidden;} .viewtog button{width:34px;height:34px;background:var(--surface);border:none;cursor:pointer;color:var(--mut);font-size:15px;} .viewtog button.on{background:var(--surface3);color:var(--ink);}
+.crumb{display:flex;gap:6px;align-items:center;margin:8px 0 2px;font-size:13.5px;color:var(--mut);flex-wrap:wrap;} .crumb a{color:var(--gold-ink);cursor:pointer;font-weight:700;} .crumb .sep{opacity:.5;}
+.folder{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer;margin-bottom:8px;} .folder:hover{border-color:var(--gold);} .fdr-ic{font-size:20px;} .fdr-t{font-weight:700;} .fdr-c{color:var(--mut);font-size:12.5px;margin-left:auto;} .fdr-arrow{color:var(--mut);font-size:18px;}
+.plist{display:flex;flex-direction:column;gap:8px;} .prow{display:flex;align-items:center;gap:14px;padding:12px 16px;border:1px solid var(--line);border-radius:11px;background:var(--surface);cursor:pointer;} .prow:hover{border-color:var(--gold);} .prow-main{flex:1;min-width:0;} .prow-name{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;} .prow-sub{font-size:12px;} .prow-meta{flex:none;font-size:12.5px;color:var(--mut);} @media(max-width:640px){.prow-meta{display:none;}}
+.pill.done{background:var(--green-dim);color:var(--green);border-color:transparent;} body.light .pill.done{background:#e7f4ec;color:#1c6b3f;}
+/* Tarefas */
+.quickadd{display:flex;gap:8px;margin-top:16px;} .quickadd input{flex:1;}
+.matrix{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;} @media(max-width:760px){.matrix{grid-template-columns:1fr;}}
+.quad{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:14px;min-height:120px;} .quad h4{font-size:13px;margin:0 0 4px;display:flex;align-items:center;gap:7px;} .quad .qd{font-size:11.5px;color:var(--mut);margin-bottom:10px;} .quad.q1{border-top:3px solid var(--red);} .quad.q2{border-top:3px solid var(--gold);} .quad.q3{border-top:3px solid var(--blue);} .quad.q4{border-top:3px solid var(--mut2);}
+.tcard{border:1px solid var(--line);border-radius:10px;background:var(--surface2);padding:10px 12px;margin-bottom:8px;cursor:pointer;display:flex;align-items:flex-start;gap:10px;} .tcard:hover{border-color:var(--gold);} .tcard.done{opacity:.55;} .tcard.done .tc-name{text-decoration:line-through;}
+.tc-check{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--line2);flex:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;margin-top:1px;} .tc-check.on{background:var(--green);border-color:var(--green);color:#fff;}
+.tc-body{flex:1;min-width:0;} .tc-name{font-weight:600;font-size:14px;} .tc-meta{font-size:11.5px;color:var(--mut);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.prio{font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:20px;} .prio.alta{background:var(--red-dim);color:var(--red);} .prio.media{background:var(--gold-dim);color:var(--gold-ink);} .prio.baixa{background:var(--surface3);color:var(--mut);}
+body.light .prio.alta{background:#fdeaea;color:#c0392b;}
+.tdue{font-size:11px;} .tdue.late{color:var(--red);font-weight:700;}
+.tflag{cursor:pointer;user-select:none;}
+.subrow{display:flex;align-items:center;gap:8px;padding:6px 0;} .subrow input[type=checkbox]{width:17px;height:17px;accent-color:var(--gold);}
+/* Início */
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;} @media(max-width:820px){.hero-grid{grid-template-columns:1fr;}}
+.stat4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px;} @media(max-width:640px){.stat4{grid-template-columns:repeat(2,1fr);}}
+.aviso{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--surface2);margin-bottom:8px;} .aviso.hoje{border-color:var(--red);background:var(--red-dim);} body.light .aviso.hoje{background:#fdeaea;} .aviso .av-ic{font-size:20px;} .aviso .av-b{flex:1;min-width:0;} .aviso .av-n{font-weight:700;font-size:14px;} .aviso .av-s{font-size:12px;color:var(--mut);} .aviso.hoje .av-s{color:var(--red);font-weight:600;}
+.av-count{font-size:12px;font-weight:800;background:var(--surface3);padding:3px 10px;border-radius:20px;white-space:nowrap;} .aviso.hoje .av-count{background:var(--red);color:#fff;}
+.hometask{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);} .hometask:last-child{border:none;}
+.avisobanner{position:fixed;top:0;left:0;right:0;z-index:80;background:var(--red);color:#fff;box-shadow:0 4px 20px rgba(0,0,0,.25);} .ab-in{max-width:1120px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;gap:12px;} .ab-ic{font-size:20px;} .ab-txt{flex:1;} .avisobanner .btn.gold{background:#fff;color:var(--red);} .ab-x{background:transparent;border:none;color:#fff;font-size:18px;cursor:pointer;}
+/* Chat do projeto */
+.proj-wrap{display:grid;grid-template-columns:1fr 340px;gap:18px;align-items:start;} .proj-wrap.chat-closed{grid-template-columns:1fr;} .proj-wrap.chat-closed .proj-chat{display:none;}
+.proj-chat{position:sticky;top:78px;border:1px solid var(--line);border-radius:14px;background:var(--surface);display:flex;flex-direction:column;height:calc(100vh - 100px);max-height:680px;}
+.pc-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line);font-size:14px;}
+.pc-list{flex:1;overflow:auto;padding:12px 14px;display:flex;flex-direction:column;gap:13px;}
+.pc-input{display:flex;gap:6px;padding:10px;border-top:1px solid var(--line);}
+.msg{display:flex;gap:9px;} .msg-av{width:30px;height:30px;border-radius:50%;flex:none;background:var(--surface3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--gold-ink);overflow:hidden;} .msg-av img{width:100%;height:100%;object-fit:cover;}
+.msg-b{flex:1;min-width:0;} .msg-top{font-size:12px;} .msg-time{color:var(--mut);font-size:10.5px;margin-left:6px;}
+.msg-tag{display:inline-block;font-size:10px;background:var(--gold-dim);color:var(--gold-ink);padding:1px 8px;border-radius:20px;margin-top:3px;cursor:pointer;} .msg-tag:hover{filter:brightness(.96);}
+.msg-txt{font-size:13px;margin-top:2px;white-space:pre-wrap;word-break:break-word;}
+.chat-fab{display:none;}
+.timer.blink{animation:tblink .8s ease 2;}
+@keyframes tblink{0%,100%{box-shadow:0 0 0 0 rgba(226,178,60,0);}50%{box-shadow:0 0 0 4px var(--gold);}}
+@media(max-width:900px){.proj-wrap{grid-template-columns:1fr;} .proj-chat{position:fixed;right:0;top:0;bottom:0;height:auto;max-height:none;width:min(340px,88vw);border-radius:0;z-index:75;transform:translateX(100%);transition:transform .25s;box-shadow:-10px 0 40px rgba(0,0,0,.3);} .proj-chat.open{transform:none;} .proj-wrap.chat-closed .proj-chat{display:flex;} .chat-fab{display:flex;position:fixed;right:16px;bottom:80px;z-index:74;width:50px;height:50px;border-radius:50%;background:var(--gold);color:#1a1a1a;border:none;font-size:20px;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.3);}}
+.statcard{cursor:pointer;transition:.15s;} .statcard:hover{border-color:var(--gold);transform:translateY(-2px);}
+.poprow{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;cursor:pointer;} .poprow:hover{border-color:var(--gold);background:var(--surface2);}
+.aviso.urg{border-color:var(--red);} .aviso.urg .av-ic{color:var(--red);}
+.gpill{font-size:10.5px;font-weight:700;padding:1px 8px;border-radius:20px;white-space:nowrap;} .gpill.urgente{background:var(--red-dim);color:var(--red);} body.light .gpill.urgente{background:#fdeaea;color:#c0392b;} .gpill.importante{background:var(--gold-dim);color:var(--gold-ink);} .gpill.normal{background:rgba(91,141,239,.16);color:var(--blue);} .gpill.lembrete{background:var(--surface3);color:var(--mut);}
+.calbox{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--surface);margin-top:6px;} .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-size:13.5px;} .cal-dow{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center;font-size:11px;color:var(--mut);margin-bottom:4px;} .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;} .calday{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:7px;font-size:12.5px;cursor:pointer;border:1px solid transparent;} .calday:hover{background:var(--surface2);} .calday.today{border-color:var(--line2);font-weight:700;} .calday.sel{background:var(--gold);color:#1a1a1a;font-weight:700;}
+.iconbtn{width:34px;height:34px;border-radius:9px;border:1px solid var(--line2);background:var(--surface);color:var(--gold-ink);cursor:pointer;font-size:15px;font-weight:800;} .iconbtn:hover{border-color:var(--gold);}
 /* fab */
 .fab{position:fixed;left:20px;bottom:20px;z-index:60;background:var(--surface);border:1px solid #1c5a34;border-radius:14px;padding:12px 14px;box-shadow:0 12px 40px rgba(0,0,0,.5);display:none;align-items:center;gap:12px;min-width:230px;} .fab.show{display:flex;} .fab .fi{width:34px;height:34px;border-radius:9px;background:var(--green-dim);display:flex;align-items:center;justify-content:center;color:var(--green);flex:none;} .fab .fn{font-size:12px;color:var(--mut);} .fab .ft{font-weight:800;font-size:16px;} .fab .fx{margin-left:auto;display:flex;gap:6px;} .fab .mini2{width:32px;height:32px;border-radius:8px;border:1px solid var(--line2);background:var(--surface2);cursor:pointer;} .fab .mini2:hover{border-color:var(--gold);} .fab .mini2.on{background:var(--gold);color:#1a1400;border-color:var(--gold);}
 #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);font-weight:700;padding:11px 20px;border-radius:24px;opacity:0;pointer-events:none;transition:.22s;z-index:95;box-shadow:0 12px 40px rgba(0,0,0,.4);} #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
@@ -137,9 +181,11 @@ body.light .cl-badge.B{background:#fde7e8;color:#c0343a;} body.light .cl-badge.Q
 </head>
 <body class="light">
 <header><div class="hin">
-  <div class="brand">Central do Editor <span class="ver">0.2</span></div>
+  <div class="brand" onclick="go('inicio')" style="cursor:pointer">Central do Editor <span class="ver">alpha</span></div>
   <div class="tabs" id="tabs">
-    <button data-s="projetos" class="active">Projetos</button>
+    <button data-s="inicio" class="active">Início</button>
+    <button data-s="projetos">Projetos</button>
+    <button data-s="tarefas">Tarefas</button>
     <button data-s="dashboard">Dashboard</button>
     <button data-s="pomodoro">Pomodoro</button>
     <button data-s="relatorio">Relatório</button>
@@ -156,7 +202,9 @@ body.light .cl-badge.B{background:#fde7e8;color:#c0343a;} body.light .cl-badge.Q
 </div></header>
 
 <div class="wrap">
-  <div class="screen active" id="s-projetos"></div>
+  <div class="screen active" id="s-inicio"></div>
+  <div class="screen" id="s-projetos"></div>
+  <div class="screen" id="s-tarefas"></div>
   <div class="screen" id="s-projeto"></div>
   <div class="screen" id="s-checklist"></div>
   <div class="screen" id="s-dashboard"></div>
@@ -207,6 +255,8 @@ const DEFAULTS={
   ],
   reportFolders:[{label:"2026 (ano)",link:""}],
   projects:[],
+  tasks:[],
+  avisos:[{id:"aviso_horas",nome:"Enviar horas extras",tipo:"mensal",dia:20,ativo:true,fixo:true,grau:"importante",som:"ding"},{id:"aviso_relatorio",nome:"Enviar o relatório",tipo:"mensal",dia:20,ativo:true,fixo:true,grau:"importante",som:"ding"}],
   savedReports:[],
   trash:[]
 };
@@ -217,6 +267,10 @@ DB.prefs=Object.assign({},DEFAULTS.prefs,DB.prefs);
 if(!DB.channels||!DB.channels.length)DB.channels=DEFAULTS.channels.slice();
 if(!DB.reportFolders)DB.reportFolders=DEFAULTS.reportFolders.slice();
 if(!DB.trash)DB.trash=[];
+if(!DB.tasks)DB.tasks=[];
+if(!DB.avisos)DB.avisos=[];
+[{id:"aviso_horas",nome:"Enviar horas extras",tipo:"mensal",dia:20,ativo:true,fixo:true,grau:"importante",som:"ding"},{id:"aviso_relatorio",nome:"Enviar o relatório",tipo:"mensal",dia:20,ativo:true,fixo:true,grau:"importante",som:"ding"}].forEach(fx=>{if(!DB.avisos.some(a=>a.id===fx.id))DB.avisos.unshift(fx);});
+(function(){const r=DB.avisos.find(a=>a.id==='aviso_relatorio');if(r&&r.urgente)r.urgente=false;DB.avisos.forEach(a=>{if(!a.grau)a.grau='normal';if(!a.som)a.som='bip';});})();
 function save(){LS.set(KEY,DB);}
 
 /* ===== Categorias: Canal -> Programas ===== */
@@ -260,7 +314,9 @@ function go(s){
   $$('.screen').forEach(x=>x.classList.toggle('active',x.id==='s-'+s));
   $$('#tabs button').forEach(b=>b.classList.toggle('active',b.dataset.s===s));
   $("#fab").classList.toggle('show', s!=='projeto' && anyRunning());
+  if(s==='inicio')renderInicio();
   if(s==='projetos')renderProjetos();
+  if(s==='tarefas')renderTarefas();
   if(s==='dashboard')renderDashboard();
   if(s==='relatorio')renderRelatorio();
   if(s==='canais')renderCanais();
@@ -272,8 +328,16 @@ function go(s){
 $$('#tabs button').forEach(b=>b.onclick=()=>go(b.dataset.s));
 
 /* ============================ PROJETOS ============================ */
-let pQuery="",pCanal="Todos",pPrograma="Todos",pSort="data";
+const MESES=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+let pQuery="",pCanal="Todos",pPrograma="Todos",pSort="data",pStatus="todas",pView=(DB.prefs.projView||'grade'),pYear=String(new Date().getFullYear()),pMonth=new Date().getMonth();
 function programaClass(pr){return pr==="Giro da Bolsa"?"b":(pr&&pr.startsWith("Diário"))?"gold":"";}
+function projYear(p){return (p.data&&/^\d{4}/.test(p.data))?p.data.slice(0,4):null;}
+function projMonth(p){return (p.data&&/^\d{4}-\d{2}/.test(p.data))?(+p.data.slice(5,7)-1):null;}
+function isVideoCanal(c){return !!c && c!=='Interno / Outro';}
+function projDone(p){return !!p.done;}
+function statusSelo(p){return projDone(p)?'<span class="pill done">✅ Concluída</span>':'<span class="pill g">🟢 Em andamento</span>';}
+function toggleDone(id){const p=getProject(id);if(!p)return;const finish=()=>{p.done=!p.done;if(p.done)p.status='publicado';save();if(current==='projeto')openProject(id);else drawProjects();toast(p.done?'Marcada como concluída.':'Reaberta (em andamento).');};
+  if(!p.done)confirmAction('Concluir o projeto "'+p.nome+'"? Ele passa para Concluída (dá pra reabrir depois).',finish);else finish();}
 function renderProjetos(){
   const el=$("#s-projetos");
   el.innerHTML=`
@@ -283,18 +347,26 @@ function renderProjetos(){
    </div>
    <div class="toolbar">
      <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg><input id="pSearch" placeholder="Buscar projeto por nome..."></div>
-     <select class="sel" id="pSort"><option value="data">Ordenar: Data</option><option value="nome">Ordenar: Nome</option><option value="tempo">Ordenar: Tempo</option><option value="tipo">Ordenar: Tipo</option></select>
+     <div class="row" style="gap:8px;align-items:center;flex-wrap:wrap">
+       <div class="seg" id="pStatusSeg"><button data-s="todas">Todas</button><button data-s="andamento">Em andamento</button><button data-s="concluida">Concluídas</button></div>
+       <select class="sel" id="pSort"><option value="data">Ordenar: Data</option><option value="nome">Ordenar: Nome</option><option value="tempo">Ordenar: Tempo</option><option value="tipo">Ordenar: Programa</option></select>
+       <div class="viewtog"><button id="vGrade" title="Grade">▦</button><button id="vLista" title="Lista">☰</button></div>
+     </div>
    </div>
    <div class="chips" id="pCanais" style="margin-bottom:8px"></div>
    <div class="chips" id="pProgramas" style="margin-bottom:6px"></div>
-   <div class="grid g3" id="pGrid" style="margin-top:16px"></div>
+   <div class="crumb" id="pCrumb"></div>
+   <div class="grid g3" id="pGrid" style="margin-top:12px"></div>
    <div class="empty-state" id="pEmpty" style="display:none"><div class="es-ic"><svg viewBox="0 0 48 48" fill="currentColor" aria-hidden="true"><path d="M6 18h36v20a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V18z"/><path d="M6.4 9.6 40 4.6l1.3 8.4L7.7 18 6.4 9.6z"/></svg></div><div class="es-t">Nenhum projeto por aqui ainda</div><div class="es-s">Crie seu primeiro projeto para começar a cronometrar as etapas da edição e gerar relatórios.</div><button class="btn gold" onclick="newProjectModal()" style="margin-top:14px">+ Novo projeto</button></div>`;
   renderCanalChips();
-  const tipos=["Todos","Diário","Quadro","Giro","Gaveta","Outro"];
   $("#pSearch").value=pQuery; $("#pSort").value=pSort;
-  $("#pSearch").oninput=e=>{pQuery=e.target.value;drawProjectCards();};
-  $("#pSort").onchange=e=>{pSort=e.target.value;drawProjectCards();};
-  drawProjectCards(); tickClock();
+  $("#pSearch").oninput=e=>{pQuery=e.target.value;drawProjects();};
+  $("#pSort").onchange=e=>{pSort=e.target.value;drawProjects();};
+  $$("#pStatusSeg button").forEach(b=>{b.classList.toggle('on',b.dataset.s===pStatus);b.onclick=()=>{pStatus=b.dataset.s;$$("#pStatusSeg button").forEach(x=>x.classList.toggle('on',x.dataset.s===pStatus));drawProjects();};});
+  $("#vGrade").classList.toggle('on',pView==='grade');$("#vLista").classList.toggle('on',pView==='lista');
+  $("#vGrade").onclick=()=>{pView='grade';DB.prefs.projView='grade';save();$("#vGrade").classList.add('on');$("#vLista").classList.remove('on');drawProjects();};
+  $("#vLista").onclick=()=>{pView='lista';DB.prefs.projView='lista';save();$("#vLista").classList.add('on');$("#vGrade").classList.remove('on');drawProjects();};
+  drawProjects(); tickClock();
 }
 function renderCanalChips(){
   const box=$("#pCanais");if(!box)return;
@@ -309,25 +381,40 @@ function renderCanalChips(){
     pbox.innerHTML=progs.map(pr=>`<span class="chip ${pPrograma===pr?'on':''}" data-p="${esc(pr)}">${esc(pr)} <b style="opacity:.6">${count(pr)}</b></span>`).join("");
     $$("#pProgramas .chip").forEach(el=>el.onclick=()=>{pPrograma=el.dataset.p;renderCanalChips();});
   }else{pbox.style.display="none";pbox.innerHTML="";}
-  drawProjectCards();
+  drawProjects();
 }
-function drawProjectCards(){
-  const grid=$("#pGrid");if(!grid)return;
-  let list=DB.projects.filter(p=>(pCanal==="Todos"||p.canal===pCanal)&&(pPrograma==="Todos"||p.programa===pPrograma)&&(p.nome||"").toLowerCase().includes(pQuery.toLowerCase()));
-  list.sort((a,b)=>{
-    if(pSort==="nome")return (a.nome||"").localeCompare(b.nome||"");
-    if(pSort==="tempo")return projectTotal(b)-projectTotal(a);
-    if(pSort==="tipo")return (a.programa||"").localeCompare(b.programa||"");
-    return (b.data||"").localeCompare(a.data||"");
-  });
-  $("#pEmpty").style.display=list.length?"none":"block";
-  grid.innerHTML=list.map(p=>`
-    <div class="card hoverable" onclick="openProject('${p.id}')">
-      <div class="row between"><div><div class="big" style="font-size:16px">${esc(p.nome)}</div><div class="muted">${esc(canalLabel(p))} · ${p.data?fmtDateBR(p.data):'Sem data'}</div></div><span class="pill ${programaClass(p.programa)}">${esc(programaLabel(p))}</span></div>
-      <div class="row between" style="margin-top:16px"><span class="muted">Tempo total</span><span class="kpi mono">${fmt(projectTotal(p))}</span></div>
-      <div class="muted" style="margin-top:10px">Checklist · ${checklistPct(p)}%</div><div class="bar"><i style="width:${checklistPct(p)}%"></i></div>
-      <div class="row" style="margin-top:14px;gap:6px"><span class="pill">${p.timers.length} cronômetro(s)</span><span class="pill ${p.status==='publicado'?'':'g'}">${esc(p.status||'em edição')}</span><button class="mini" style="margin-left:auto" title="Excluir projeto" onclick="event.stopPropagation();delProject('${p.id}')">🗑</button></div>
-    </div>`).join("");
+function sortList(list){list.sort((a,b)=>{if(pSort==="nome")return (a.nome||"").localeCompare(b.nome||"");if(pSort==="tempo")return projectTotal(b)-projectTotal(a);if(pSort==="tipo")return programaLabel(a).localeCompare(programaLabel(b));return (b.data||"").localeCompare(a.data||"");});}
+function projMatch(p){return (pCanal==="Todos"||p.canal===pCanal)&&(pPrograma==="Todos"||p.programa===pPrograma)&&(pStatus==="todas"||(pStatus==="concluida"?projDone(p):!projDone(p)))&&(p.nome||"").toLowerCase().includes(pQuery.toLowerCase());}
+function enterYear(y){pYear=y;pMonth=null;drawProjects();}
+function enterMonth(m){pMonth=+m;drawProjects();}
+function enterNoDate(){pYear='__nodate__';pMonth=null;drawProjects();}
+function goYears(){pYear=null;pMonth=null;drawProjects();}
+function goMonths(){pMonth=null;drawProjects();}
+function folderRow(label,count,onclick){return `<div class="folder" onclick="${onclick}"><div class="fdr-ic">📁</div><div class="fdr-t">${esc(label)}</div><div class="fdr-c">${count} projeto(s)</div><div class="fdr-arrow">›</div></div>`;}
+function projectCard(p){return `<div class="card hoverable" onclick="openProject('${p.id}')">
+    <div class="row between"><div><div class="big" style="font-size:16px">${esc(p.nome)}</div><div class="muted">${esc(canalLabel(p))} · ${p.data?fmtDateBR(p.data):'Sem data'}</div></div><span class="pill ${programaClass(p.programa)}">${esc(programaLabel(p))}</span></div>
+    <div class="row between" style="margin-top:16px"><span class="muted">Tempo total</span><span class="kpi mono">${fmt(projectTotal(p))}</span></div>
+    <div class="muted" style="margin-top:10px">Checklist · ${checklistPct(p)}%</div><div class="bar"><i style="width:${checklistPct(p)}%"></i></div>
+    <div class="row" style="margin-top:14px;gap:6px">${statusSelo(p)}<span class="pill">${p.timers.length} cron.</span><button class="mini" style="margin-left:auto" title="Excluir projeto" onclick="event.stopPropagation();delProject('${p.id}')">🗑</button></div>
+  </div>`;}
+function projectRow(p){return `<div class="prow" onclick="openProject('${p.id}')">
+    <div class="prow-main"><div class="prow-name">${esc(p.nome)}</div><div class="muted prow-sub">${esc(canalLabel(p))} · ${esc(programaLabel(p))} · ${p.data?fmtDateBR(p.data):'Sem data'}</div></div>
+    <div class="prow-meta mono">${fmt(projectTotal(p))}</div><div class="prow-meta">${checklistPct(p)}%</div><div class="prow-meta">${statusSelo(p)}</div>
+    <button class="mini" title="Excluir" onclick="event.stopPropagation();delProject('${p.id}')">🗑</button></div>`;}
+function renderList(list){const grid=$("#pGrid");$("#pEmpty").style.display=list.length?'none':'block';if(pView==='lista'){grid.className='plist';grid.innerHTML=list.map(projectRow).join("");}else{grid.className='grid g3';grid.innerHTML=list.map(projectCard).join("");}}
+function drawProjects(){
+  const grid=$("#pGrid");if(!grid)return;const crumb=$("#pCrumb");
+  const filtering = pQuery.trim()!=='' || pCanal!=="Todos" || pPrograma!=="Todos" || pStatus!=="todas";
+  const all=DB.projects.filter(projMatch);
+  if(filtering){crumb.innerHTML='';const list=all.slice();sortList(list);renderList(list);return;}
+  if(pYear==='__nodate__'){crumb.innerHTML=`<a onclick="goYears()">Projetos</a> <span class="sep">›</span> <span>Sem data</span>`;const list=all.filter(p=>!projYear(p));sortList(list);renderList(list);return;}
+  if(pYear&&pMonth!=null){crumb.innerHTML=`<a onclick="goYears()">Projetos</a> <span class="sep">›</span> <a onclick="goMonths()">${pYear}</a> <span class="sep">›</span> <span>${MESES[pMonth]}</span>`;const list=all.filter(p=>projYear(p)===pYear&&projMonth(p)===pMonth);sortList(list);renderList(list);return;}
+  if(pYear){crumb.innerHTML=`<a onclick="goYears()">Projetos</a> <span class="sep">›</span> <span>${pYear}</span>`;const months={};all.forEach(p=>{if(projYear(p)===pYear){const m=projMonth(p);if(m!=null)months[m]=(months[m]||0)+1;}});const keys=Object.keys(months).map(Number).sort((a,b)=>b-a);grid.className='';grid.innerHTML=keys.length?keys.map(m=>folderRow(MESES[m],months[m],`enterMonth(${m})`)).join(""):'<div class="muted">Nenhum projeto neste ano.</div>';$("#pEmpty").style.display='none';return;}
+  crumb.innerHTML=`<span>Projetos</span>`;
+  const years={};let noDate=0;all.forEach(p=>{const y=projYear(p);if(y)years[y]=(years[y]||0)+1;else noDate++;});
+  const keys=Object.keys(years).sort((a,b)=>b.localeCompare(a));
+  grid.className='';let h=keys.map(y=>folderRow(y,years[y],`enterYear('${y}')`)).join("");if(noDate)h+=folderRow('Sem data',noDate,`enterNoDate()`);
+  grid.innerHTML=h;$("#pEmpty").style.display=(keys.length||noDate)?'none':'block';
 }
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 
@@ -346,6 +433,7 @@ function projectFormHTML(p){
       <div class="field"><label>Programa</label><select class="inp" id="npPrograma"></select></div>
       <div class="field" id="npProgramaTxtWrap" style="display:none"><label>Descreva o programa</label><input class="inp" id="npProgramaTxt" placeholder="Ex: Institucional" value="${esc(p.programaTxt||'')}"></div>
       <div class="field"><label>Fluxo</label><select class="inp" id="npFluxo"><option>Padrão</option><option>Urgente</option></select></div>
+      <div class="field" id="npBrutoWrap"><label>Tempo do bruto (hh:mm)<span id="npBrutoReq" style="color:var(--red)"> *</span></label><input class="inp" id="npBruto" placeholder="ex: 01:30" value="${esc(p.bruto||'')}"></div>
       <div class="field"><label>Link da pasta no Drive</label><div class="row" style="gap:6px"><input class="inp" id="npDrive" placeholder="https://drive.google.com/..." value="${esc(p.drive||'')}"><button class="btn ghost sm" title="Adicionar outro link" onclick="addLinkRow()">＋</button></div></div>
     </div>
     <div id="npLinks"></div>
@@ -355,7 +443,7 @@ function projectFormHTML(p){
 }
 function newProjectModal(){$("#modalBody").innerHTML=projectFormHTML(null);$("#npFluxo").value=DB.prefs.defaultFlow||"Padrão";npUpdatePrograma();openModal();}
 function editProject(id){const p=getProject(id);if(!p)return;$("#modalBody").innerHTML=projectFormHTML(p);$("#npFluxo").value=p.fluxo||"Padrão";npUpdatePrograma(p.programa);(p.links||[]).forEach(l=>addLinkRow(l.label,l.url));openModal();}
-function npUpdatePrograma(preselect){const canal=$("#npCanal").value;const sel=$("#npPrograma");sel.innerHTML=(CATEGORIES[canal]||[]).map(pr=>`<option ${pr===preselect?'selected':''}>${esc(pr)}</option>`).join("");const cw=$("#npCanalTxtWrap");if(cw)cw.style.display=(canal==='Interno / Outro')?'block':'none';npToggleProg();sel.onchange=npToggleProg;}
+function npUpdatePrograma(preselect){const canal=$("#npCanal").value;const sel=$("#npPrograma");sel.innerHTML=(CATEGORIES[canal]||[]).map(pr=>`<option ${pr===preselect?'selected':''}>${esc(pr)}</option>`).join("");const cw=$("#npCanalTxtWrap");if(cw)cw.style.display=(canal==='Interno / Outro')?'block':'none';const req=$("#npBrutoReq");if(req)req.style.display=isVideoCanal(canal)?'inline':'none';npToggleProg();sel.onchange=npToggleProg;}
 function npToggleProg(){const pr=$("#npPrograma").value;const pw=$("#npProgramaTxtWrap");if(pw)pw.style.display=(pr==='Interno'||pr==='Outro')?'block':'none';const n=$("#npGavetaNote");if(n)n.style.display=(pr==='Gaveta')?'block':'none';}
 function addLinkRow(label,url){const box=$("#npLinks");if(!box)return;const div=document.createElement('div');div.className='row link-row';div.style.gap='6px';div.style.marginTop='8px';div.innerHTML=`<input class="inp lk-label" placeholder="Nome (ex: Roteiro)" value="${esc(label||'')}" style="max-width:190px"><input class="inp lk-url" placeholder="https://..." value="${esc(url||'')}"><button class="btn ghost sm" title="Remover" onclick="this.parentNode.remove()">✕</button>`;box.appendChild(div);}
 function collectLinks(){return $$("#npLinks .link-row").map(r=>({label:r.querySelector('.lk-label').value.trim(),url:r.querySelector('.lk-url').value.trim()})).filter(l=>l.url);}
@@ -363,10 +451,12 @@ function saveProjectForm(id){
   const nome=$("#npNome").value.trim()||"(sem nome)";
   const canal=$("#npCanal").value;const canalTxt=(canal==='Interno / Outro')?$("#npCanalTxt").value.trim():'';
   const programa=$("#npPrograma").value;const programaTxt=(programa==='Interno'||programa==='Outro')?$("#npProgramaTxt").value.trim():'';
+  const bruto=$("#npBruto").value.trim();
+  if(isVideoCanal(canal)&&!bruto){toast("Informe o tempo do bruto (hh:mm) para projetos de vídeo.");$("#npBruto").focus();return;}
   const data=$("#npData").value||(programa==='Gaveta'?'':new Date().toISOString().slice(0,10));
-  const base={nome,editor:$("#npEditor").value.trim(),data,canal,canalTxt,programa,programaTxt,fluxo:$("#npFluxo").value,drive:$("#npDrive").value.trim(),links:collectLinks(),obs:$("#npObs").value.trim()};
+  const base={nome,editor:$("#npEditor").value.trim(),data,canal,canalTxt,programa,programaTxt,bruto,fluxo:$("#npFluxo").value,drive:$("#npDrive").value.trim(),links:collectLinks(),obs:$("#npObs").value.trim()};
   if(id){const p=getProject(id);if(p){Object.assign(p,base);save();closeModal();openProject(id);toast("Projeto atualizado.");}}
-  else{const p=Object.assign({id:uid(),status:"em edição",createdAt:Date.now(),timers:[],checklist:emptyChecklist()},base);DB.projects.unshift(p);save();closeModal();openProject(p.id);toast("Projeto criado.");}
+  else{const p=Object.assign({id:uid(),status:"em edição",done:false,createdAt:Date.now(),timers:[],checklist:emptyChecklist()},base);DB.projects.unshift(p);save();closeModal();openProject(p.id);toast("Projeto criado.");}
 }
 
 /* ============================ PROJETO ABERTO ============================ */
@@ -377,10 +467,11 @@ function renderProjeto(){
   const tipoClass=programaClass(p.programa);
   const running=p.timers.find(t=>t.status==='running');
   $("#s-projeto").innerHTML=`
+    <div class="proj-wrap ${chatOpen?'':'chat-closed'}" id="projWrap"><div class="proj-main">
     <div class="row between wrapf">
-      <div><div class="row" style="gap:10px"><button class="btn ghost sm" onclick="go('projetos')">← Projetos</button><h1 style="font-size:23px">${esc(p.nome)}</h1><span class="pill">${esc(canalLabel(p))}</span><span class="pill ${tipoClass}">${esc(programaLabel(p))}</span><span class="pill ${p.status==='publicado'?'':'g'}">${esc(p.status)}</span></div>
-      <div class="sub">${p.data?fmtDateBR(p.data):'Sem data'} · Editor: ${esc(p.editor||'—')}</div></div>
-      <div class="row wrapf" style="gap:8px">${p.drive?`<button class="btn ghost sm" onclick="openLink('${encodeURI(p.drive)}')">📁 Abrir Drive</button>`:''}${(p.links||[]).map(l=>`<button class="btn ghost sm" onclick="openLink('${encodeURI(l.url)}')">🔗 ${esc(l.label||'Link')}</button>`).join("")}<button class="btn ghost sm" onclick="editProject('${p.id}')">✎ Editar</button><button class="btn ghost sm" onclick="go('relatorio')">Exportar</button><button class="btn ghost sm" onclick="delProject('${p.id}')">🗑 Excluir</button></div>
+      <div><div class="row" style="gap:10px"><button class="btn ghost sm" onclick="go('projetos')">← Projetos</button><h1 style="font-size:23px">${esc(p.nome)}</h1><span class="pill">${esc(canalLabel(p))}</span><span class="pill ${tipoClass}">${esc(programaLabel(p))}</span>${statusSelo(p)}</div>
+      <div class="sub">${p.data?fmtDateBR(p.data):'Sem data'} · Editor: ${esc(p.editor||'—')}${p.bruto?' · Bruto: '+esc(p.bruto):''}</div></div>
+      <div class="row wrapf" style="gap:8px">${p.drive?`<button class="btn ghost sm" onclick="openLink('${encodeURI(p.drive)}')">📁 Abrir Drive</button>`:''}${(p.links||[]).map(l=>`<button class="btn ghost sm" onclick="openLink('${encodeURI(l.url)}')">🔗 ${esc(l.label||'Link')}</button>`).join("")}<button class="btn ${projDone(p)?'ghost':'gold'} sm" onclick="toggleDone('${p.id}')">${projDone(p)?'↩ Reabrir':'✅ Concluir'}</button><button class="btn ghost sm" onclick="toggleChat()">💬 Chat</button><button class="btn ghost sm" onclick="editProject('${p.id}')">✎ Editar</button><button class="btn ghost sm" onclick="delProject('${p.id}')">🗑 Excluir</button></div>
     </div>
     <div class="grid g4" style="margin-top:20px">
       <div class="card"><div class="muted">Tempo total</div><div class="kpi mono" id="pTotal" style="margin-top:4px">${fmt(projectTotal(p))}</div></div>
@@ -397,9 +488,29 @@ function renderProjeto(){
       </div>
     </div>
     <div class="new-timer" id="newBtn" onclick="toggleNewForm(true)">＋ Novo cronômetro</div>
-    <div class="bridge"><div><div class="big">Etapas concluídas? Passe para a verificação final.</div><div class="muted">O tempo de cada etapa entra no relatório junto com o checklist.</div></div><button class="btn gold" onclick="openChecklist('${p.id}')">→ Próximo passo: Checklist</button></div>`;
-  renderTimers();
+    ${checklistPct(p)===100&&!projDone(p)?`<div class="bridge" style="border-color:var(--green)"><div><div class="big">Tudo checado! 🎉</div><div class="muted">O checklist chegou a 100%. Quer marcar este projeto como concluído?</div></div><button class="btn gold" onclick="toggleDone('${p.id}')">✅ Marcar como concluída</button></div>`:''}
+    <div class="bridge"><div><div class="big">Etapas concluídas? Passe para a verificação final.</div><div class="muted">O tempo de cada etapa entra no relatório junto com o checklist.</div></div><button class="btn gold" onclick="openChecklist('${p.id}')">→ Próximo passo: Checklist</button></div>
+    </div>
+    <aside class="proj-chat ${chatOpen?'open':''}" id="projChat">
+      <div class="pc-head"><b>💬 Chat do projeto</b><button class="mini" onclick="toggleChat()" title="Fechar">✕</button></div>
+      <div class="pc-list" id="chatList"></div>
+      <div class="pc-input"><input class="inp" id="chatIn" placeholder="Comentar no projeto..." onkeydown="if(event.key==='Enter')sendChat()"><button class="btn gold sm" onclick="sendChat()">Enviar</button></div>
+    </aside></div>
+    <button class="chat-fab" onclick="toggleChat()" title="Chat">💬</button>`;
+  renderTimers();renderChat();
 }
+let chatOpen=(window.innerWidth>900);
+function toggleChat(){chatOpen=!chatOpen;const w=$("#projWrap"),c=$("#projChat");if(w)w.classList.toggle('chat-closed',!chatOpen);if(c)c.classList.toggle('open',chatOpen);if(chatOpen)renderChat();}
+function avatarHTML(){const ph=DB.profile.photo;const ini=(DB.profile.name||'?').split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();return `<div class="msg-av">${ph?`<img src="${ph}" alt="">`:esc(ini)}</div>`;}
+function projChatMessages(){const p=getProject(openProjectId);if(!p)return[];const msgs=[];
+  p.timers.forEach(t=>(t.comments||[]).forEach(c=>msgs.push({text:c.text,at:c.at,ts:c.ts||0,timerId:t.id,timerName:t.name})));
+  (p.chat||[]).forEach(c=>msgs.push({text:c.text,at:c.at,ts:c.ts||0,general:true}));
+  msgs.sort((a,b)=>(a.ts||0)-(b.ts||0));return msgs;}
+function renderChat(){const box=$("#chatList");if(!box)return;const msgs=projChatMessages();
+  box.innerHTML=msgs.length?msgs.map(m=>`<div class="msg">${avatarHTML()}<div class="msg-b"><div class="msg-top"><b>${esc(DB.profile.name||'Você')}</b><span class="msg-time">${esc(m.at||'')}</span></div>${m.timerName?`<span class="msg-tag" onclick="jumpToTimer('${m.timerId}')">⏱ ${esc(m.timerName)}</span>`:''}<div class="msg-txt">${esc(m.text)}</div></div></div>`).join(""):'<div class="muted">Nenhum comentário ainda. Comente aqui ou dentro de um cronômetro.</div>';
+  box.scrollTop=box.scrollHeight;}
+function sendChat(){const inp=$("#chatIn");const txt=(inp.value||'').trim();if(!txt)return;const p=getProject(openProjectId);p.chat=p.chat||[];p.chat.push({text:txt,at:nowClock(),ts:Date.now()});save();inp.value='';renderChat();}
+function jumpToTimer(id){const t=getTimer(id);if(t&&!t._open){t._open=true;renderTimers();}const el=document.querySelector('.timer[data-tid="'+id+'"]');if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.remove('blink');void el.offsetWidth;el.classList.add('blink');setTimeout(()=>el.classList.remove('blink'),1800);}}
 function toggleNewForm(show){const f=$("#newForm"),b=$("#newBtn");if(!f)return;f.style.display=show?'block':'none';b.style.display=show?'none':'block';if(show){const i=$("#ntName");i.value=DB.prefs.processes[0]||"";i.focus();i.select();}}
 function createTimer(){const p=getProject(openProjectId);const name=$("#ntName").value.trim()||"Novo processo";p.timers.push({id:uid(),name,status:'idle',accumulated:0,startedAt:null,startClock:null,endClock:null,comments:[],history:[]});save();toggleNewForm(false);renderTimers();updateProjectKpis();toast("Cronômetro criado.");}
 function renderTimers(){
@@ -462,7 +573,7 @@ function openComments(id){const t=getTimer(id);
   <button class="btn gold sm" style="margin-top:10px;width:100%;justify-content:center" onclick="addComment('${id}')">Adicionar comentário</button>`;
   openDraw();setTimeout(()=>{const i=$("#cmtIn");i&&i.focus();},50);
 }
-function addComment(id){const t=getTimer(id);const inp=$("#cmtIn");const txt=inp.value.trim();if(!txt)return;const min=fmtShort(elapsed(t));t.comments.push({min,text:txt,at:nowClock()});save();openComments(id);renderTimers();toast("Comentário adicionado.");}
+function addComment(id){const t=getTimer(id);const inp=$("#cmtIn");const txt=inp.value.trim();if(!txt)return;const min=fmtShort(elapsed(t));t.comments.push({min,text:txt,at:nowClock(),ts:Date.now()});save();openComments(id);renderTimers();renderChat();toast("Comentário adicionado.");}
 function openHistory(id){const t=getTimer(id);
   $("#drawBody").innerHTML=`<h3 style="font-size:19px;font-weight:800">Histórico — ${esc(t.name)}</h3><div class="muted" style="margin:4px 0 16px">Toda alteração de tempo fica registrada.</div>
   ${t.history.slice().reverse().map(h=>`<div class="cmt"><div class="h">${h.at}</div><div class="t">${esc(h.text)}</div></div>`).join("")||'<div class="muted">Sem alterações ainda.</div>'}`;
@@ -472,8 +583,9 @@ function openDraw(){$("#draw").classList.add('show');$("#dback").classList.add('
 function closeDraw(){$("#draw").classList.remove('show');$("#dback").classList.remove('show');}
 $("#dback").onclick=()=>{closeDraw();closeModal();};
 
-function delProject(id){confirmAction('Excluir este projeto? Ele vai para a lixeira e pode ser restaurado.',()=>{const p=getProject(id);if(p)DB.trash.unshift({type:'project',data:p,at:Date.now()});DB.projects=DB.projects.filter(x=>x.id!==id);save();if(current==='projetos')drawProjectCards();else go('projetos');toast("Projeto na lixeira.");});}
+function delProject(id){confirmAction('Excluir este projeto? Ele vai para a lixeira e pode ser restaurado.',()=>{const p=getProject(id);if(p)DB.trash.unshift({type:'project',data:p,at:Date.now()});DB.projects=DB.projects.filter(x=>x.id!==id);save();if(current==='projetos')drawProjects();else go('projetos');toast("Projeto na lixeira.");});}
 function restoreTrash(i){const it=DB.trash[i];if(!it)return;if(it.type==='project'){DB.projects.unshift(it.data);DB.trash.splice(i,1);save();toast("Projeto restaurado.");}
+  else if(it.type==='task'){DB.tasks.unshift(it.data);DB.trash.splice(i,1);save();toast("Tarefa restaurada.");}
   else{const p=getProject(it.projectId);if(p){p.timers.push(it.data);DB.trash.splice(i,1);save();toast("Cronômetro restaurado.");}else{toast("O projeto original não existe mais. Restaure-o antes.");return;}}
   renderConfig();}
 function purgeTrash(i){confirmAction('Excluir definitivamente? Não dá mais pra recuperar.',()=>{DB.trash.splice(i,1);save();renderConfig();toast("Excluído de vez.");});}
@@ -511,6 +623,211 @@ function clFinish(){const p=getProject(clProjId);let pending=[];SECTIONS.forEach
 }
 function confetti(){const c=$("#celebrate");const cols=['#e2b23c','#4bb96a','#5b8def','#e5555a','#f2d488'];for(let i=0;i<36;i++){const d=document.createElement('div');d.className='confetti';d.style.left=Math.random()*100+'%';d.style.background=cols[i%cols.length];d.style.animationDelay=(Math.random()*.6)+'s';d.style.transform='rotate('+Math.random()*360+'deg)';c.appendChild(d);setTimeout(()=>d.remove(),3000);}}
 
+/* ============================ INÍCIO ============================ */
+const DIAS_SEM=['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
+const SONS={bip:'Bip',ding:'Ding',alerta:'Alerta',suave:'Suave',mudo:'Mudo'};
+function avExpirado(av){return av.tipo==='unica'&&av.data&&av.data<new Date().toISOString().slice(0,10);}
+function diasParaAviso(av){const now=new Date();const y=now.getFullYear(),m=now.getMonth(),d=now.getDate();const base=new Date(y,m,d);
+  if(av.tipo==='diario')return 0;
+  if(av.tipo==='unica'){if(!av.data)return null;const dt=new Date(av.data+'T00:00:00');return Math.round((dt-base)/864e5);}
+  if(av.tipo==='mensal'){let alvo=new Date(y,m,av.dia);if(av.dia<d)alvo=new Date(y,m+1,av.dia);return Math.round((alvo-base)/864e5);}
+  if(av.tipo==='semanal'){return (av.diaSemana-now.getDay()+7)%7;}
+  return null;}
+function avisoHoje(av){const now=new Date();if(av.tipo==='diario')return true;if(av.tipo==='unica')return av.data===now.toISOString().slice(0,10);if(av.tipo==='mensal')return now.getDate()===av.dia;if(av.tipo==='semanal')return now.getDay()===av.diaSemana;return false;}
+function avQuando(av){if(av.tipo==='diario')return'todo dia';if(av.tipo==='unica')return av.data?fmtDateBR(av.data):'sem data';if(av.tipo==='mensal')return'todo dia '+av.dia;if(av.tipo==='semanal')return'toda '+DIAS_SEM[av.diaSemana];return'';}
+function playSom(tipo){if(!tipo||tipo==='mudo')return;try{const ctx=new(window.AudioContext||window.webkitAudioContext)();const cfg={bip:{f:880,d:.25,t:'sine'},ding:{f:1200,d:.5,t:'triangle'},alerta:{f:440,d:.7,t:'square'},suave:{f:660,d:.6,t:'sine'}}[tipo]||{f:880,d:.3,t:'sine'};const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.type=cfg.t;o.frequency.value=cfg.f;g.gain.value=.0001;o.start();g.gain.exponentialRampToValueAtTime(.25,ctx.currentTime+.04);g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+cfg.d);o.stop(ctx.currentTime+cfg.d+.05);}catch(e){}}
+function renderInicio(){
+  const nome=(DB.profile.name||'editor').split(' ')[0];
+  const emCurso=DB.tasks.filter(t=>!t.done);
+  const hoje=new Date().toISOString().slice(0,10);
+  const atrasadas=emCurso.filter(t=>t.prazo&&t.prazo<hoje);
+  const urgentes=emCurso.filter(t=>t.grau==='urgente');
+  const proj=DB.projects;const emAndamento=proj.filter(p=>!projDone(p));
+  const avisosAtivos=(DB.avisos||[]).filter(a=>a.ativo&&!avExpirado(a));
+  const topTasks=emCurso.slice().sort((a,b)=>{const o={urgente:0,importante:1,normal:2,lembrete:3};return (o[a.grau]-o[b.grau])||((a.prazo||'zzz').localeCompare(b.prazo||'zzz'));}).slice(0,6);
+  $("#s-inicio").innerHTML=`
+   <div class="row between wrapf"><div><h1>Olá, ${esc(nome)} 👋</h1><div class="sub">${new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})}</div></div>
+     <div class="clock-box"><div class="ct mono" id="clockT">--:--:--</div><div class="cd muted" id="clockD">Horário local</div></div></div>
+   <div class="stat4">
+     <div class="card statcard" onclick="statPopup('emcurso')"><div class="muted">Tarefas em curso</div><div class="kpi" style="margin-top:4px">${emCurso.length}</div></div>
+     <div class="card statcard" onclick="statPopup('urgentes')"><div class="muted">Urgentes</div><div class="kpi" style="margin-top:4px;color:var(--red)">${urgentes.length}</div></div>
+     <div class="card statcard" onclick="statPopup('atrasadas')"><div class="muted">Atrasadas</div><div class="kpi" style="margin-top:4px">${atrasadas.length}</div></div>
+     <div class="card statcard" onclick="statPopup('projetos')"><div class="muted">Projetos em andamento</div><div class="kpi" style="margin-top:4px">${emAndamento.length}</div></div>
+   </div>
+   <div class="hero-grid">
+     <div class="card"><div class="row between"><div class="big">Avisos e lembretes</div><button class="btn ghost sm" onclick="manageAvisos()">⚙ Gerenciar</button></div>
+       <div style="margin-top:12px">${avisosAtivos.length?avisosAtivos.map(avisoHTML).join(""):'<div class="muted">Nenhum aviso ativo. Clique em Gerenciar para criar.</div>'}</div>
+     </div>
+     <div class="card"><div class="row between"><div class="big">Suas tarefas</div><button class="btn ghost sm" onclick="go('tarefas')">Ver todas →</button></div>
+       <div style="margin-top:10px">${topTasks.length?topTasks.map(t=>`<div class="hometask"><span class="gpill ${t.grau||'normal'}">${GRAU_LABEL[t.grau]||'Normal'}</span><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(t.nome)}</span>${t.prazo?`<span class="tdue ${taskLate(t)?'late':''}" style="font-size:11.5px">${fmtDateBR(t.prazo)}</span>`:''}</div>`).join(""):'<div class="muted">Nada em aberto. 🎉</div>'}</div>
+     </div>
+   </div>`;
+  tickClock();checkAvisoDoDia();
+}
+function statPopup(kind){
+  const hoje=new Date().toISOString().slice(0,10);
+  let titulo,itens=[],tipo='task';
+  const emCurso=DB.tasks.filter(t=>!t.done);
+  if(kind==='emcurso'){titulo='Tarefas em curso';itens=emCurso;}
+  else if(kind==='urgentes'){titulo='Tarefas urgentes';itens=emCurso.filter(t=>t.grau==='urgente');}
+  else if(kind==='atrasadas'){titulo='Tarefas atrasadas';itens=emCurso.filter(t=>t.prazo&&t.prazo<hoje);}
+  else {titulo='Projetos em andamento';tipo='proj';itens=DB.projects.filter(p=>!projDone(p));}
+  const rows=itens.length?itens.map(it=>tipo==='task'
+    ? `<div class="poprow" onclick="closeModal();go('tarefas');setTimeout(()=>openTask('${it.id}'),120)"><span class="gpill ${it.grau||'normal'}">${GRAU_LABEL[it.grau]||'Normal'}</span><span style="flex:1;min-width:0">${esc(it.nome)}</span>${it.prazo?`<span class="tdue ${it.prazo<hoje?'late':''}" style="font-size:11.5px">${fmtDateBR(it.prazo)}</span>`:''}</div>`
+    : `<div class="poprow" onclick="closeModal();openProject('${it.id}')"><span class="pill ${programaClass(it.programa)}">${esc(programaLabel(it))}</span><span style="flex:1;min-width:0">${esc(it.nome)}</span><span class="mono" style="font-size:12px">${fmt(projectTotal(it))}</span></div>`
+  ).join("") : '<div class="muted">Nada aqui. 🎉</div>';
+  $("#modalBody").innerHTML=`<h3>${titulo} <span class="muted" style="font-weight:400">(${itens.length})</span></h3><div style="margin-top:10px;max-height:60vh;overflow:auto">${rows}</div><div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn gold" onclick="closeModal()">Fechar</button></div>`;
+  openModal();
+}
+function avisoHTML(av){const hoje=avisoHoje(av);const dias=diasParaAviso(av);
+  const sub=hoje?'É hoje! Não esqueça.':(dias===1?'Amanhã':(dias!=null?('Faltam '+dias+' dias'):''));
+  const badge=hoje?'HOJE':(dias!=null?dias+'d':'');const ic=hoje?'🔔':'📌';
+  return `<div class="aviso ${hoje?'hoje':''}"><div class="av-ic">${ic}</div><div class="av-b"><div class="av-n">${esc(av.nome)} <span class="gpill ${av.grau||'normal'}">${GRAU_LABEL[av.grau]||'Normal'}</span></div><div class="av-s">${sub} · ${avQuando(av)}</div></div><div class="av-count">${badge}</div></div>`;
+}
+/* Banner recorrente a cada 2h no dia do aviso */
+let _avisoTimer=null,_avisoParado={};
+function checkAvisoDoDia(){
+  const hojeStr=new Date().toISOString().slice(0,10);
+  (DB.avisos||[]).forEach(av=>{ if(av.ativo&&avisoHoje(av)&&_avisoParado[av.id]!==hojeStr){ /* elegível */ } });
+  if(_avisoTimer)return; // um relógio só
+  const tick=()=>{
+    const hj=new Date().toISOString().slice(0,10);
+    const pendentes=(DB.avisos||[]).filter(a=>a.ativo&&!avExpirado(a)&&avisoHoje(a)&&_avisoParado[a.id]!==hj);
+    if(pendentes.length){ mostrarAvisoBanner(pendentes[0]); }
+  };
+  setTimeout(tick,1500); // primeiro aviso logo ao abrir
+  _avisoTimer=setInterval(tick,2*60*60*1000); // a cada 2h
+}
+function mostrarAvisoBanner(av){
+  if($("#avisoBanner"))return;
+  const div=document.createElement('div');div.id='avisoBanner';div.className='avisobanner';
+  div.innerHTML=`<div class="ab-in"><span class="ab-ic">🔔</span><div class="ab-txt"><b>${esc(av.nome)}</b> — é hoje! Não esqueça.</div><button class="btn gold sm" onclick="pararAviso('${av.id}')">Já fiz / parar de avisar</button><button class="ab-x" onclick="fecharAvisoBanner()">✕</button></div>`;
+  document.body.appendChild(div);playSom(av.som||'bip');
+}
+function fecharAvisoBanner(){const b=$("#avisoBanner");if(b)b.remove();}
+function pararAviso(id){_avisoParado[id]=new Date().toISOString().slice(0,10);fecharAvisoBanner();toast('Ok! Não aviso mais hoje.');}
+let _avCalY=new Date().getFullYear(),_avCalM=new Date().getMonth(),_avSelDate='';
+function manageAvisos(){
+  $("#modalBody").innerHTML=`<h3>Avisos e lembretes</h3><div class="muted">Crie lembretes. No dia, aparece um aviso a cada 2h (com o app aberto) até você marcar como feito.</div>
+   <div id="avList" style="margin-top:12px"></div>
+   <div class="card" style="margin-top:14px;background:var(--surface2)"><div class="big" style="font-size:14px">Novo aviso</div>
+     <div class="frow" style="margin-top:8px">
+       <div class="field"><label>Nome</label><input class="inp" id="avNome" placeholder="Ex: Reunião de pauta"></div>
+       <div class="field"><label>Repetição</label><select class="inp" id="avTipo" onchange="avToggleTipo()"><option value="unica">Uma vez (data)</option><option value="diario">Todo dia</option><option value="semanal">Toda semana</option><option value="mensal" selected>Todo mês (dia X)</option></select></div>
+       <div class="field"><label>Grau</label><select class="inp" id="avGrau"><option value="urgente">Urgente</option><option value="importante">Importante</option><option value="normal" selected>Normal</option><option value="lembrete">Lembrete</option></select></div>
+       <div class="field"><label>Som</label><div class="row" style="gap:6px"><select class="inp" id="avSom">${Object.entries(SONS).map(([k,v])=>`<option value="${k}" ${k==='bip'?'selected':''}>${v}</option>`).join("")}</select><button class="btn ghost sm" onclick="playSom($('#avSom').value)" title="Testar som">▶</button></div></div>
+       <div class="field" id="avDiaWrap"><label>Dia do mês</label><input class="inp" id="avDia" type="number" min="1" max="31" value="20"></div>
+       <div class="field" id="avSemWrap" style="display:none"><label>Dia da semana</label><select class="inp" id="avSem"><option value="1">Segunda</option><option value="2">Terça</option><option value="3">Quarta</option><option value="4">Quinta</option><option value="5">Sexta</option><option value="6">Sábado</option><option value="0">Domingo</option></select></div>
+     </div>
+     <div id="avCalWrap" style="display:none;margin-top:8px"><label class="muted">Escolha a data:</label><div class="calbox" id="avCal"></div></div>
+     <button class="btn gold sm" style="margin-top:10px" onclick="addAviso()">＋ Adicionar aviso</button></div>
+   <div class="row" style="justify-content:flex-end;margin-top:16px"><button class="btn gold" onclick="closeModal()">Fechar</button></div>`;
+  renderAvList();avToggleTipo();openModal();
+}
+function avToggleTipo(){const t=$("#avTipo").value;$("#avDiaWrap").style.display=t==='mensal'?'block':'none';$("#avSemWrap").style.display=t==='semanal'?'block':'none';$("#avCalWrap").style.display=t==='unica'?'block':'none';if(t==='unica'){_avCalY=new Date().getFullYear();_avCalM=new Date().getMonth();avCalRender();}}
+function avCalRender(){const wrap=$("#avCal");if(!wrap)return;const startDow=new Date(_avCalY,_avCalM,1).getDay();const days=new Date(_avCalY,_avCalM+1,0).getDate();const todayStr=new Date().toISOString().slice(0,10);let cells='';for(let i=0;i<startDow;i++)cells+='<div></div>';for(let d=1;d<=days;d++){const ds=_avCalY+'-'+pad(_avCalM+1)+'-'+pad(d);cells+=`<div class="calday ${ds===_avSelDate?'sel':''} ${ds===todayStr?'today':''}" onclick="avPick('${ds}')">${d}</div>`;}wrap.innerHTML=`<div class="cal-head"><button type="button" class="mini" onclick="avCalNav(-1)">‹</button><b>${MESES[_avCalM]} ${_avCalY}</b><button type="button" class="mini" onclick="avCalNav(1)">›</button></div><div class="cal-dow">${['D','S','T','Q','Q','S','S'].map(x=>`<span>${x}</span>`).join('')}</div><div class="cal-grid">${cells}</div>`;}
+function avCalNav(dir){_avCalM+=dir;if(_avCalM<0){_avCalM=11;_avCalY--;}if(_avCalM>11){_avCalM=0;_avCalY++;}avCalRender();}
+function avPick(ds){_avSelDate=ds;avCalRender();}
+function renderAvList(){const box=$("#avList");if(!box)return;box.innerHTML=(DB.avisos||[]).map(av=>`<div class="aviso"><div class="av-b"><div class="av-n">${esc(av.nome)}${av.fixo?' 🔒':''} <span class="gpill ${av.grau||'normal'}">${GRAU_LABEL[av.grau]||'Normal'}</span></div><div class="av-s">${avQuando(av)}${av.fixo?' · obrigatório':''} · 🔊 ${SONS[av.som]||'Bip'}</div></div>${av.fixo?'<span class="muted" style="font-size:11px">fixo</span>':`<label class="muted" style="display:inline-flex;gap:6px;align-items:center;cursor:pointer"><input type="checkbox" ${av.ativo?'checked':''} onchange="toggleAviso('${av.id}')"> ativo</label><button class="mini" onclick="delAviso('${av.id}')">🗑</button>`}</div>`).join("")||'<div class="muted">Nenhum aviso ainda.</div>';}
+function addAviso(){const nome=($("#avNome").value||'').trim();if(!nome){toast('Dê um nome ao aviso.');return;}const tipo=$("#avTipo").value;const av={id:'av'+Date.now(),nome,tipo,ativo:true,grau:$("#avGrau").value,som:$("#avSom").value};
+  if(tipo==='mensal')av.dia=Math.min(31,Math.max(1,+$("#avDia").value||1));
+  else if(tipo==='semanal')av.diaSemana=+$("#avSem").value;
+  else if(tipo==='unica'){if(!_avSelDate){toast('Escolha a data no calendário.');return;}av.data=_avSelDate;}
+  DB.avisos.push(av);save();renderAvList();$("#avNome").value='';_avSelDate='';avCalRender();toast('Aviso criado.');}
+function toggleAviso(id){const av=DB.avisos.find(a=>a.id===id);if(!av)return;if(av.fixo){toast('Este aviso é obrigatório e não pode ser desativado.');renderAvList();return;}av.ativo=!av.ativo;save();renderAvList();}
+function delAviso(id){const av=DB.avisos.find(a=>a.id===id);if(av&&av.fixo){toast('Este aviso é obrigatório e não pode ser excluído.');return;}DB.avisos=DB.avisos.filter(a=>a.id!==id);save();renderAvList();}
+
+/* ============================ TAREFAS + PDI ============================ */
+let tView='matriz',tShowDone=false;
+const PRIO_LABEL={alta:'Alta',media:'Média',baixa:'Baixa'};
+const GRAU_LABEL={urgente:'Urgente',importante:'Importante',normal:'Normal',lembrete:'Lembrete'};
+const GRAU_ORDER=['urgente','importante','normal','lembrete'];
+DB.tasks.forEach(t=>{if(!t.grau){t.grau=(t.importante&&t.urgente)?'urgente':(t.importante?'importante':(t.urgente?'normal':'lembrete'));}});
+function newTask(nome,pdi,grau){return {id:uid(),nome:nome||'',desc:'',grau:grau||'normal',prioridade:'media',prazo:'',status:'afazer',done:false,projetoId:'',pdi:!!pdi,sub:[],links:[],obs:'',createdAt:Date.now()};}
+function quadrant(t){return GRAU_ORDER.indexOf(t.grau||'lembrete')+1;}
+function taskLate(t){return t.prazo && !t.done && t.prazo < new Date().toISOString().slice(0,10);}
+function renderTarefas(){
+  $("#s-tarefas").innerHTML=`
+   <div class="row between wrapf"><div><h1>Tarefas</h1><div class="sub">Organize o que precisa fazer na semana. Anote rápido e detalhe quando quiser.</div></div>
+     <div class="row" style="gap:8px;align-items:center"><div class="seg" id="tViewSeg"><button data-v="matriz">Matriz</button><button data-v="lista">Lista</button><button data-v="pdi">PDI</button></div><button class="btn ghost sm" onclick="exportTasksXLS()">⬇ Planilha</button></div>
+   </div>
+   <div class="quickadd"><input class="inp" id="tQuick" placeholder="Escreva uma tarefa e tecle Enter..."><select class="sel" id="tGrau"><option value="urgente">Urgente</option><option value="importante">Importante</option><option value="normal" selected>Normal</option><option value="lembrete">Lembrete</option></select><button class="btn gold" onclick="quickAddTask()">Adicionar</button></div>
+   <label class="muted" style="display:inline-flex;gap:7px;align-items:center;margin-top:12px;cursor:pointer"><input type="checkbox" id="tShowDone" ${tShowDone?'checked':''} onchange="tShowDone=this.checked;renderTasksBody()"> mostrar concluídas</label>
+   <div id="tBody" style="margin-top:6px"></div>`;
+  $$("#tViewSeg button").forEach(b=>{b.classList.toggle('on',b.dataset.v===tView);b.onclick=()=>{tView=b.dataset.v;$$("#tViewSeg button").forEach(x=>x.classList.toggle('on',x.dataset.v===tView));renderTasksBody();};});
+  const q=$("#tQuick");q.onkeydown=e=>{if(e.key==='Enter')quickAddTask();};
+  renderTasksBody();
+}
+function quickAddTask(){const inp=$("#tQuick");const v=(inp.value||'').trim();if(!v)return;const grau=($("#tGrau")||{}).value||'normal';const t=newTask(v,tView==='pdi',grau);DB.tasks.unshift(t);save();inp.value='';renderTasksBody();}
+function tcheck(id){const t=DB.tasks.find(x=>x.id===id);if(!t)return;const apply=()=>{t.done=!t.done;t.status=t.done?'feito':'afazer';save();renderTasksBody();};if(!t.done)confirmAction('Concluir a tarefa "'+t.nome+'"?',apply);else apply();}
+function tcardHTML(t){const proj=t.projetoId?getProject(t.projetoId):null;
+  return `<div class="tcard ${t.done?'done':''}" onclick="openTask('${t.id}')">
+    <div class="tc-check ${t.done?'on':''}" onclick="event.stopPropagation();tcheck('${t.id}')">${t.done?'✓':''}</div>
+    <div class="tc-body"><div class="tc-name">${esc(t.nome||'(sem título)')}</div>
+      <div class="tc-meta"><span class="prio ${t.prioridade}">${PRIO_LABEL[t.prioridade]}</span>${t.prazo?`<span class="tdue ${taskLate(t)?'late':''}">📅 ${fmtDateBR(t.prazo)}${taskLate(t)?' (atrasada)':''}</span>`:''}${proj?`<span>🎬 ${esc(proj.nome)}</span>`:''}${t.sub&&t.sub.length?`<span>☑ ${t.sub.filter(s=>s.done).length}/${t.sub.length}</span>`:''}${t.pdi?'<span>🎯 PDI</span>':''}</div>
+    </div></div>`;}
+function renderTasksBody(){
+  const box=$("#tBody");if(!box)return;
+  let tasks=DB.tasks.filter(t=>tShowDone||!t.done);
+  if(tView==='pdi'){
+    const pdis=tasks.filter(t=>t.pdi);
+    box.innerHTML=`<div class="card" style="margin-top:14px"><div class="big">Meu PDI</div><div class="muted" style="margin-bottom:10px">Plano de Desenvolvimento Individual — registre e marque conforme cumpre.</div>${pdis.length?pdis.map(tcardHTML).join(""):'<div class="muted">Nenhum item de PDI ainda. Escreva acima e adicione (a aba PDI cria já marcado como PDI).</div>'}</div>`;
+    return;
+  }
+  if(tView==='lista'){
+    const order={alta:0,media:1,baixa:2};
+    tasks.sort((a,b)=>(a.done-b.done)||(order[a.prioridade]-order[b.prioridade])||((a.prazo||'zzz').localeCompare(b.prazo||'zzz')));
+    box.innerHTML=tasks.length?`<div style="margin-top:14px">${tasks.map(tcardHTML).join("")}</div>`:emptyTasks();
+    return;
+  }
+  // matriz
+  const q={1:[],2:[],3:[],4:[]};tasks.forEach(t=>q[quadrant(t)].push(t));
+  const quadBox=(n,titulo,desc,cls)=>`<div class="quad ${cls}"><h4>${titulo}</h4><div class="qd">${desc}</div>${q[n].length?q[n].map(tcardHTML).join(""):'<div class="muted" style="font-size:12px">—</div>'}</div>`;
+  box.innerHTML=`<div class="matrix">
+    ${quadBox(1,'🔴 Urgente','Precisa ser feito já','q1')}
+    ${quadBox(2,'🟡 Importante','Importante, com calma','q2')}
+    ${quadBox(3,'🔵 Normal','Fluxo do dia a dia','q3')}
+    ${quadBox(4,'⚪ Lembrete','Pra não esquecer','q4')}
+  </div>${tasks.length?'':emptyTasks()}`;
+}
+function emptyTasks(){return `<div class="empty-state" style="margin-top:16px"><div class="es-ic"><svg viewBox="0 0 48 48" fill="currentColor"><path d="M10 6h20l8 8v28a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/></svg></div><div class="es-t">Nenhuma tarefa</div><div class="es-s">Escreva ali em cima e tecle Enter pra anotar rápido.</div></div>`;}
+function openTask(id){const t=DB.tasks.find(x=>x.id===id);if(!t)return;
+  const projOpts=['<option value="">— nenhum —</option>'].concat(DB.projects.map(p=>`<option value="${p.id}" ${t.projetoId===p.id?'selected':''}>${esc(p.nome)}</option>`)).join("");
+  $("#modalBody").innerHTML=`<h3>Tarefa</h3>
+   <div class="field"><label>Título</label><input class="inp" id="tkNome" value="${esc(t.nome)}"></div>
+   <div class="field"><label>Descrição</label><textarea class="inp" id="tkDesc" style="min-height:60px">${esc(t.desc||'')}</textarea></div>
+   <div class="frow">
+     <div class="field"><label>Grau</label><select class="inp" id="tkGrau"><option value="urgente" ${t.grau==='urgente'?'selected':''}>Urgente</option><option value="importante" ${t.grau==='importante'?'selected':''}>Importante</option><option value="normal" ${t.grau==='normal'?'selected':''}>Normal</option><option value="lembrete" ${t.grau==='lembrete'?'selected':''}>Lembrete</option></select></div>
+     <div class="field"><label>Prioridade</label><select class="inp" id="tkPrio"><option value="alta" ${t.prioridade==='alta'?'selected':''}>Alta</option><option value="media" ${t.prioridade==='media'?'selected':''}>Média</option><option value="baixa" ${t.prioridade==='baixa'?'selected':''}>Baixa</option></select></div>
+     <div class="field"><label>Status</label><select class="inp" id="tkStatus"><option value="afazer" ${t.status==='afazer'?'selected':''}>A fazer</option><option value="fazendo" ${t.status==='fazendo'?'selected':''}>Fazendo</option><option value="feito" ${t.status==='feito'?'selected':''}>Feito</option></select></div>
+     <div class="field"><label>Prazo</label><input class="inp" id="tkPrazo" type="date" value="${esc(t.prazo||'')}"></div>
+     <div class="field"><label>Projeto (opcional)</label><select class="inp" id="tkProj">${projOpts}</select></div>
+   </div>
+   <div class="row" style="gap:16px;margin-top:4px"><label class="muted" style="display:inline-flex;gap:7px;align-items:center;cursor:pointer"><input type="checkbox" id="tkPdi" ${t.pdi?'checked':''}> É PDI</label></div>
+   <div style="margin-top:14px"><div class="big" style="font-size:14px">Subtarefas</div><div id="tkSubs" style="margin-top:6px"></div><div class="row" style="gap:6px;margin-top:6px"><input class="inp" id="tkSubNew" placeholder="Nova subtarefa..." style="flex:1"><button class="btn ghost sm" onclick="addSub('${t.id}')">＋</button></div></div>
+   <div class="row between" style="margin-top:18px"><button class="btn ghost sm" onclick="delTask('${t.id}')">🗑 Excluir</button><div class="row" style="gap:8px"><button class="btn ghost" onclick="closeModal()">Cancelar</button><button class="btn gold" onclick="saveTask('${t.id}')">Salvar</button></div></div>`;
+  renderSubs(t);openModal();
+}
+function renderSubs(t){const box=$("#tkSubs");if(!box)return;box.innerHTML=(t.sub||[]).map((s,i)=>`<div class="subrow"><input type="checkbox" ${s.done?'checked':''} onchange="toggleSub('${t.id}',${i})"><span style="flex:1;${s.done?'text-decoration:line-through;opacity:.6':''}">${esc(s.text)}</span><button class="mini" onclick="rmSub('${t.id}',${i})">✕</button></div>`).join("")||'<div class="muted" style="font-size:12px">Sem subtarefas.</div>';}
+function addSub(id){const t=DB.tasks.find(x=>x.id===id);const inp=$("#tkSubNew");const v=(inp.value||'').trim();if(!v)return;t.sub=t.sub||[];t.sub.push({text:v,done:false});inp.value='';save();renderSubs(t);}
+function toggleSub(id,i){const t=DB.tasks.find(x=>x.id===id);t.sub[i].done=!t.sub[i].done;save();renderSubs(t);}
+function rmSub(id,i){const t=DB.tasks.find(x=>x.id===id);t.sub.splice(i,1);save();renderSubs(t);}
+function saveTask(id){const t=DB.tasks.find(x=>x.id===id);if(!t)return;
+  t.nome=$("#tkNome").value.trim();t.desc=$("#tkDesc").value.trim();t.prioridade=$("#tkPrio").value;t.status=$("#tkStatus").value;t.prazo=$("#tkPrazo").value;t.projetoId=$("#tkProj").value;
+  t.importante=undefined;t.urgente=undefined;t.grau=$("#tkGrau").value;t.pdi=$("#tkPdi").checked;t.done=(t.status==='feito');
+  save();closeModal();renderTasksBody();toast("Tarefa salva.");}
+function delTask(id){confirmAction('Excluir esta tarefa?',()=>{const t=DB.tasks.find(x=>x.id===id);if(t)DB.trash.unshift({type:'task',data:t,at:Date.now()});DB.tasks=DB.tasks.filter(x=>x.id!==id);save();closeModal();renderTasksBody();toast("Tarefa na lixeira.");});}
+function exportTasksXLS(){
+  let h=`<table border="1" cellspacing="0" cellpadding="4"><tr><td colspan="6" style="font-size:16px;font-weight:bold;background:#e2b23c">Tarefas — Central do Editor alpha</td></tr>`;
+  h+=`<tr><td colspan="6">Responsável: ${xesc(DB.profile.name)} &nbsp;|&nbsp; Gerado em: ${new Date().toLocaleString('pt-BR')}</td></tr><tr><td colspan="6"></td></tr>`;
+  h+=`<tr style="font-weight:bold;background:#dddddd"><td>Tarefa</td><td>Prioridade</td><td>Grau</td><td>Status</td><td>Prazo</td><td>Projeto</td></tr>`;
+  DB.tasks.forEach(t=>{const proj=t.projetoId?getProject(t.projetoId):null;h+=`<tr><td>${xesc(t.nome)}${t.pdi?' (PDI)':''}</td><td>${PRIO_LABEL[t.prioridade]}</td><td>${GRAU_LABEL[t.grau]||t.grau}</td><td>${t.done?'Feito':(t.status==='fazendo'?'Fazendo':'A fazer')}</td><td>${t.prazo?fmtDateBR(t.prazo):'—'}</td><td>${proj?xesc(proj.nome):'—'}</td></tr>`;});
+  h+=`</table>`;
+  const html=`<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="utf-8"></head><body>${h}</body></html>`;
+  const blob=new Blob(['\ufeff'+html],{type:"application/vnd.ms-excel"});const u=URL.createObjectURL(blob);const a=document.createElement("a");a.href=u;a.download="tarefas-central-do-editor.xls";a.style.display="none";document.body.appendChild(a);a.click();setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(u);},1500);
+  toast("Tarefas exportadas (.xls).");
+}
+
 /* ============================ DASHBOARD ============================ */
 function renderDashboard(){
   const ps=DB.projects;const nowT=Date.now();const weekAgo=nowT-7*864e5;
@@ -544,17 +861,80 @@ function renderDashboard(){
 /* ============================ RELATÓRIO ============================ */
 let repPeriod="tudo";
 function inPeriod(p){const d=p.createdAt||0,now=Date.now();if(repPeriod==="dia")return d>=now-864e5;if(repPeriod==="semana")return d>=now-7*864e5;if(repPeriod==="mes")return d>=now-30*864e5;if(repPeriod==="ano")return d>=now-365*864e5;return true;}
+function _short(sec){sec=Math.max(0,Math.floor(sec));const h=Math.floor(sec/3600),m=Math.floor(sec%3600/60);return h?(h+'h'+pad(m)):(m+'min');}
+function buildReportDoc(){
+  const procs=DB.prefs.processes;const list=DB.projects.filter(inPeriod);
+  const stageTime=(p,name)=>p.timers.filter(t=>t.name.trim().toLowerCase()===name.toLowerCase()).reduce((a,t)=>a+elapsed(t),0);
+  const perLabel={dia:'Hoje',semana:'Últimos 7 dias',mes:'Últimos 30 dias',ano:'Últimos 12 meses',tudo:'Tudo'}[repPeriod]||repPeriod;
+  const total=list.reduce((a,p)=>a+projectTotal(p),0);const nProj=list.length;const nDone=list.filter(p=>checklistPct(p)===100).length;const media=nProj?Math.floor(total/nProj):0;
+  const stageTot={};procs.forEach(pr=>stageTot[pr]=list.reduce((a,p)=>a+stageTime(p,pr),0));
+  let revTot=0;list.forEach(p=>p.timers.forEach(t=>{if(t.name.toLowerCase().includes('revis'))revTot+=elapsed(t);}));
+  const progCount={};list.forEach(p=>{const k=programaLabel(p)||'—';progCount[k]=(progCount[k]||0)+1;});
+  const slow=Object.entries(stageTot).sort((a,b)=>b[1]-a[1])[0]||['—',0];
+  const longest=list.slice().sort((a,b)=>projectTotal(b)-projectTotal(a))[0];
+  const maxStage=Math.max(1,...Object.values(stageTot));const maxProj=Math.max(1,...list.map(projectTotal));
+  const stageBars=Object.entries(stageTot).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]).map(([n,v])=>`<div class="bar-row"><div class="bar-lbl">${esc(n)}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(v/maxStage*100)}%"></div></div><div class="bar-val">${_short(v)}</div></div>`).join("")||'<div style="color:#77736B">Sem dados de etapas.</div>';
+  const projBars=list.slice().sort((a,b)=>projectTotal(b)-projectTotal(a)).filter(p=>projectTotal(p)>0).map(p=>{const nm=p.nome.length<=46?p.nome:p.nome.slice(0,44)+'…';return `<div class="bar-row"><div class="bar-lbl" title="${esc(p.nome)}">${esc(nm)}</div><div class="bar-track"><div class="bar-fill p" style="width:${Math.round(projectTotal(p)/maxProj*100)}%"></div></div><div class="bar-val">${_short(projectTotal(p))}</div></div>`;}).join("");
+  const hasBruto=list.some(p=>p.bruto);
+  const prjRows=list.map(p=>{const stg=procs.map(pr=>{const s=stageTime(p,pr);return `<td class="mono">${s?fmt(s):'—'}</td>`;}).join("");const cls=checklistPct(p)>=100?'ok':'mid';const dl=p.drive?`<a href="${esc(p.drive)}">abrir</a>`:'—';return `<tr><td>${p.data?fmtDateBR(p.data):'—'}</td><td class="pname">${esc(p.nome)}</td><td>${esc(canalLabel(p))}</td><td><span class="tag">${esc(programaLabel(p))}</span></td>${hasBruto?`<td class="mono">${esc(p.bruto||'—')}</td>`:''}${stg}<td class="mono b">${fmt(projectTotal(p))}</td><td><span class="chk ${cls}">${checklistPct(p)}%</span></td><td>${dl}</td></tr>`;}).join("");
+  let detRows="";list.forEach(p=>{if(!p.timers.length)return;detRows+=`<tr class="grp"><td colspan="4">${esc(p.nome)}</td></tr>`;p.timers.forEach(t=>{const cm=(t.comments||[]).map(c=>`[${c.min}] ${c.text}`).join("  |  ");const com=cm?`<div class="cmt">${esc(cm)}</div>`:'';detRows+=`<tr><td>${esc(t.name)}${com}</td><td class="mono">${t.startClock||'—'}</td><td class="mono">${t.endClock||'—'}</td><td class="mono b">${fmt(elapsed(t))}</td></tr>`;});});
+  const progChips=Object.entries(progCount).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<span class="pchip">${esc(k)} <b>${v}</b></span>`).join("");
+  const nLead=4+(hasBruto?1:0);
+  const CSS=`:root{--bg:#F1EFE9;--surface:#fff;--surface2:#F6F4EE;--surface3:#EDEAE2;--line:#D9D5CC;--line2:#CBC6BB;--ink:#201F1B;--mut:#77736B;--gold:#E8A927;--gold-dim:#F6E9C7;--gold-ink:#8a6a12;--green:#39865d;--green-dim:#e7f4ec;--headerbg:#171717;--header-ink:#f4f2ee;}*{box-sizing:border-box;}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:14px;line-height:1.5;}.mono{font-variant-numeric:tabular-nums;}.wrap{max-width:920px;margin:0 auto;padding:0 0 60px;}header{background:var(--headerbg);color:var(--header-ink);padding:26px 40px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;}.brand{font-weight:800;font-size:20px;}.brand .ver{font-family:Georgia,serif;font-style:italic;font-weight:600;color:var(--gold);font-size:15px;}.brand .sub{display:block;font-weight:500;font-size:12.5px;color:#a8a29a;margin-top:3px;letter-spacing:.02em;text-transform:uppercase;}.hmeta{text-align:right;font-size:12.5px;color:#c9c4bb;}.hmeta b{color:var(--header-ink);}.body{padding:32px 40px;}h2{font-size:15px;text-transform:uppercase;letter-spacing:.04em;color:var(--gold-ink);margin:34px 0 14px;font-weight:800;}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}.kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;}.kpi .l{color:var(--mut);font-size:12px;}.kpi .v{font-size:26px;font-weight:800;margin-top:6px;font-variant-numeric:tabular-nums;}.kpi .v.g{color:var(--gold-ink);}.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 22px;}.bar-row{display:grid;grid-template-columns:190px 1fr 64px;gap:12px;align-items:center;margin-bottom:10px;}.bar-lbl{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}.bar-track{background:var(--surface3);border-radius:8px;height:16px;overflow:hidden;}.bar-fill{height:100%;background:var(--gold);border-radius:8px;}.bar-fill.p{background:var(--gold-ink);}.bar-val{text-align:right;font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums;}table{width:100%;border-collapse:collapse;font-size:12.5px;}th{text-align:left;color:var(--mut);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em;padding:9px 8px;border-bottom:2px solid var(--line);}td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top;}td.b{font-weight:800;}.pname{font-weight:600;max-width:230px;}tr.grp td{background:var(--surface3);font-weight:800;font-size:12px;}.tag{background:var(--gold-dim);color:var(--gold-ink);font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap;}.chk{font-weight:700;font-size:11px;padding:2px 8px;border-radius:20px;}.chk.ok{background:var(--green-dim);color:var(--green);}.chk.mid{background:var(--surface3);color:var(--mut);}.cmt{margin-top:5px;background:var(--gold-dim);color:var(--gold-ink);border-radius:8px;padding:6px 9px;font-size:11.5px;}.pchips{display:flex;gap:8px;flex-wrap:wrap;}.pchip{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:5px 12px;font-size:12.5px;}.pchip b{color:var(--gold-ink);}.insight{background:var(--gold-dim);border:1px solid var(--gold);border-radius:14px;padding:16px 20px;font-size:13.5px;}.insight ul{margin:8px 0 0;padding-left:18px;}.insight li{margin:3px 0;}a{color:var(--gold-ink);}.foot{text-align:center;color:var(--mut);font-size:11.5px;margin-top:36px;}.toolbar{max-width:920px;margin:16px auto 0;padding:0 40px;text-align:right;}.pbtn{background:var(--gold);color:#1a1a1a;border:none;border-radius:9px;padding:9px 16px;font-weight:700;cursor:pointer;font-size:13px;}.scroll{overflow-x:auto;}@media print{.toolbar{display:none;}body{background:#fff;}header,.kpi,.card,.tag,.chk,.cmt,.insight,.bar-fill,.bar-track,tr.grp td{-webkit-print-color-adjust:exact;print-color-adjust:exact;}@page{margin:12mm;}}@media(max-width:680px){.kpis{grid-template-columns:repeat(2,1fr);}header,.body{padding:22px;}.bar-row{grid-template-columns:120px 1fr 52px;}}`;
+  return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Relatório de Produção — Central do Editor</title><style>${CSS}</style></head><body>
+  <div class="toolbar"><button class="pbtn" onclick="window.print()">⬇ Salvar como PDF / Imprimir</button></div>
+  <div class="wrap"><header><div class="brand">Central do Editor <span class="ver">alpha</span><span class="sub">Relatório de Produção</span></div><div class="hmeta"><div>Editor: <b>${esc(DB.profile.name||'—')}</b></div><div>Período: <b>${esc(perLabel)}</b></div><div>Gerado em: ${new Date().toLocaleString('pt-BR')}</div></div></header>
+  <div class="body">
+   <h2>Resumo do período</h2>
+   <div class="kpis"><div class="kpi"><div class="l">Tempo total trabalhado</div><div class="v g">${_short(total)}</div></div><div class="kpi"><div class="l">Projetos</div><div class="v">${nProj}</div></div><div class="kpi"><div class="l">Média por projeto</div><div class="v">${_short(media)}</div></div><div class="kpi"><div class="l">Concluídos (checklist 100%)</div><div class="v">${nDone}<span style="font-size:14px;color:var(--mut);font-weight:600"> / ${nProj}</span></div></div></div>
+   <h2>Distribuição por programa</h2><div class="pchips">${progChips||'<span class="muted">—</span>'}</div>
+   <h2>Tempo por etapa</h2><div class="card">${stageBars}</div>
+   <h2>Tempo por projeto</h2><div class="card">${projBars||'<div style="color:#77736B">Sem tempo registrado.</div>'}</div>
+   <h2>Destaques</h2><div class="insight"><b>Leitura rápida do período:</b><ul><li>Foram <b>${nProj} projetos</b> somando <b>${fmt(total)}</b> de trabalho registrado.</li><li>A etapa que mais consumiu tempo foi <b>${esc(slow[0])}</b> (${_short(slow[1])}).</li><li>O projeto mais longo foi <b>${esc(longest?longest.nome:'—')}</b> (${longest?_short(projectTotal(longest)):'—'}).</li><li>Tempo dedicado à <b>revisão</b>: <b>${_short(revTot)}</b>.</li><li>${nDone} de ${nProj} projetos com checklist 100% concluído.</li></ul></div>
+   <h2>Vídeos e tempos por etapa</h2><div class="scroll"><table><thead><tr><th>Data</th><th>Vídeo</th><th>Canal</th><th>Programa</th>${hasBruto?'<th>Bruto</th>':''}${procs.map(p=>`<th>${esc(p)}</th>`).join("")}<th>Total</th><th>Checklist</th><th>Drive</th></tr></thead><tbody>${prjRows}</tbody><tfoot><tr><td colspan="${nLead}" style="text-align:right;font-weight:800;border-top:2px solid var(--line)">Total do período</td><td class="mono b" colspan="99" style="border-top:2px solid var(--line)">${fmt(total)}</td></tr></tfoot></table></div>
+   ${detRows?`<h2>Detalhe por etapa</h2><div class="scroll"><table><thead><tr><th>Etapa / comentário</th><th>Início</th><th>Término</th><th>Tempo</th></tr></thead><tbody>${detRows}</tbody></table></div>`:''}
+   <div class="foot">Gerado pela Central do Editor · ${new Date().toLocaleString('pt-BR')} · Documento de produção — AUVP</div>
+  </div></div></body></html>`;
+}
+function exportarDocumento(){
+  const list=DB.projects.filter(inPeriod);
+  if(!list.length){toast('Nada neste período para gerar o documento.');return;}
+  const html=buildReportDoc();
+  const w=window.open('','_blank');
+  if(w){w.document.open();w.document.write(html);w.document.close();setTimeout(()=>{try{w.print();}catch(e){}},700);}
+  else{const blob=new Blob([html],{type:'text/html'});const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download='relatorio-producao.html';a.style.display='none';document.body.appendChild(a);a.click();setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(u);},1500);toast('Documento baixado (abra e use Imprimir → Salvar como PDF).');}
+}
+function infoSkill(){
+  $("#modalBody").innerHTML=`<h3>Como gerar o relatório profissional</h3>
+   <div class="muted" style="margin-top:4px">Duas formas de transformar seus dados num documento bonito pra entregar.</div>
+   <div class="card" style="margin-top:14px;background:var(--surface2)"><div class="big" style="font-size:14px">① Direto aqui (mais rápido)</div>
+     <ol style="margin:8px 0 0;padding-left:18px;font-size:13.5px;line-height:1.7">
+       <li>Escolha o <b>período</b> no topo (Dia, Semana, Mês, Ano ou Tudo).</li>
+       <li>Clique em <b>⬇ Documento (PDF)</b>.</li>
+       <li>Abre o documento pronto; use <b>Salvar como PDF</b> na janela de impressão.</li>
+     </ol></div>
+   <div class="card" style="margin-top:12px;background:var(--surface2)"><div class="big" style="font-size:14px">② Pela skill no Claude (para a equipe)</div>
+     <ol style="margin:8px 0 0;padding-left:18px;font-size:13.5px;line-height:1.7">
+       <li>Baixe a <b>skill</b> no botão <b>⬇ Skill</b> e instale no Claude (botão "Salvar skill").</li>
+       <li>Aqui na Central, clique em <b>⬇ Planilha</b> para exportar seus dados.</li>
+       <li>No Claude, envie essa planilha e peça: <i>"faz o documento de produção"</i>.</li>
+       <li>O Claude devolve o mesmo documento, no padrão da Central, pronto pra PDF.</li>
+     </ol></div>
+   <div class="note" style="margin-top:12px">O documento traz: resumo do período, distribuição por programa, gráficos por etapa e por projeto, destaques automáticos, a tabela de vídeos e o detalhe por etapa com os comentários.</div>
+   <div class="row" style="justify-content:flex-end;margin-top:16px"><button class="btn gold" onclick="closeModal()">Entendi</button></div>`;
+  openModal();
+}
 function renderRelatorio(){
   const procs=DB.prefs.processes;
   const list=DB.projects.filter(inPeriod);
   const stageTime=(p,name)=>p.timers.filter(t=>t.name.trim().toLowerCase()===name.toLowerCase()).reduce((a,t)=>a+elapsed(t),0);
-  const rows=list.map(p=>`<tr><td>${p.data?fmtDateBR(p.data):'—'}</td><td>${esc(p.nome)}</td><td>${esc(canalLabel(p)||'—')}</td><td>${esc(programaLabel(p)||'—')}</td><td>${esc(p.editor||'—')}</td>${procs.map(pr=>{const s=stageTime(p,pr);return `<td class="mono">${s?fmtShort(s):'—'}</td>`;}).join("")}<td class="mono">${fmtShort(projectTotal(p))}</td><td>${checklistPct(p)}%</td></tr>`).join("");
+  const rows=list.map(p=>`<tr><td>${p.data?fmtDateBR(p.data):'—'}</td><td>${esc(p.nome)}</td><td>${esc(canalLabel(p)||'—')}</td><td>${esc(programaLabel(p)||'—')}</td><td>${esc(p.editor||'—')}</td><td>${esc(p.bruto||'—')}</td>${procs.map(pr=>{const s=stageTime(p,pr);return `<td class="mono">${s?fmtShort(s):'—'}</td>`;}).join("")}<td class="mono">${fmtShort(projectTotal(p))}</td><td>${checklistPct(p)}%</td></tr>`).join("");
   const totalAll=list.reduce((a,p)=>a+projectTotal(p),0);
   $("#s-relatorio").innerHTML=`
-   <div class="row between wrapf"><div><h1>Relatório</h1><div class="sub">Todos os dados por período (menos o Pomodoro). Exporta pra planilha.</div></div>
-     <div class="row" style="gap:8px"><div class="seg" id="repSeg">${[['dia','Dia'],['semana','Semana'],['mes','Mês'],['ano','Ano'],['tudo','Tudo']].map(x=>`<button data-p="${x[0]}" class="${repPeriod===x[0]?'on':''}">${x[1]}</button>`).join("")}</div><button class="btn gold sm" onclick="exportXLS()">⬇ Exportar planilha (Excel)</button></div></div>
+   <div class="row between wrapf"><div><h1>Relatório</h1><div class="sub">Todos os dados por período (menos o Pomodoro). Exporta planilha, documento em PDF e a skill.</div></div>
+     <div class="row wrapf" style="gap:8px;align-items:center"><div class="seg" id="repSeg">${[['dia','Dia'],['semana','Semana'],['mes','Mês'],['ano','Ano'],['tudo','Tudo']].map(x=>`<button data-p="${x[0]}" class="${repPeriod===x[0]?'on':''}">${x[1]}</button>`).join("")}</div><button class="iconbtn" onclick="infoSkill()" title="Como usar">ⓘ</button><button class="btn ghost sm" onclick="exportXLS()">⬇ Planilha</button><button class="btn gold sm" onclick="exportarDocumento()">⬇ Documento (PDF)</button><a class="btn ghost sm" href="relatorio-producao-central.skill" download>⬇ Skill</a></div></div>
    ${list.length===0?`<div class="empty-state" style="margin-top:22px"><div class="es-ic">🗂️</div><div class="es-t">Nada neste período</div><div class="es-s">Ajuste o período ou crie projetos para gerar o relatório.</div></div>`:`
-   <div class="card" style="margin-top:20px;overflow:auto"><table class="tbl"><thead><tr><th>Data</th><th>Vídeo</th><th>Canal</th><th>Programa</th><th>Editor</th>${procs.map(p=>`<th>${esc(p)}</th>`).join("")}<th>Total</th><th>Checklist</th></tr></thead><tbody>${rows}</tbody><tfoot><tr style="font-weight:700"><td colspan="${5+procs.length}">Total do período</td><td class="mono">${fmtShort(totalAll)}</td><td>—</td></tr></tfoot></table></div>
+   <div class="card" style="margin-top:20px;overflow:auto"><table class="tbl"><thead><tr><th>Data</th><th>Vídeo</th><th>Canal</th><th>Programa</th><th>Editor</th><th>Bruto</th>${procs.map(p=>`<th>${esc(p)}</th>`).join("")}<th>Total</th><th>Checklist</th></tr></thead><tbody>${rows}</tbody><tfoot><tr style="font-weight:700"><td colspan="${6+procs.length}">Total do período</td><td class="mono">${fmtShort(totalAll)}</td><td>—</td></tr></tfoot></table></div>
    <div class="note">A planilha exportada traz o detalhe completo: cada etapa com início, término, tempo, comentários (com o minuto), link do Drive e observações.</div>`}`;
   $$("#repSeg button").forEach(b=>b.onclick=()=>{repPeriod=b.dataset.p;renderRelatorio();});
 }
@@ -563,14 +943,14 @@ function exportXLS(){
   const procs=DB.prefs.processes;const list=DB.projects.filter(inPeriod);
   const stageTime=(p,name)=>p.timers.filter(t=>t.name.trim().toLowerCase()===name.toLowerCase()).reduce((a,t)=>a+elapsed(t),0);
   const perLabel={dia:'Hoje',semana:'Últimos 7 dias',mes:'Últimos 30 dias',ano:'Últimos 12 meses',tudo:'Tudo'}[repPeriod]||repPeriod;
-  const nCols=6+procs.length+3;
+  const nCols=7+procs.length+3;
   let h=`<table border="1" cellspacing="0" cellpadding="4">`;
-  h+=`<tr><td colspan="${nCols}" style="font-size:16px;font-weight:bold;background:#e2b23c">Relatório — Central do Editor 0.2</td></tr>`;
+  h+=`<tr><td colspan="${nCols}" style="font-size:16px;font-weight:bold;background:#e2b23c">Relatório — Central do Editor alpha</td></tr>`;
   h+=`<tr><td colspan="${nCols}">Editor: ${xesc(DB.profile.name)} &nbsp;|&nbsp; Período: ${perLabel} &nbsp;|&nbsp; Gerado em: ${new Date().toLocaleString('pt-BR')}</td></tr>`;
   h+=`<tr><td colspan="${nCols}"></td></tr>`;
-  h+=`<tr style="font-weight:bold;background:#dddddd"><td>Data</td><td>Projeto</td><td>Canal</td><td>Programa</td><td>Editor</td><td>Fluxo</td>${procs.map(p=>`<td>${xesc(p)}</td>`).join("")}<td>Total</td><td>Checklist %</td><td>Link Drive</td></tr>`;
-  list.forEach(p=>{h+=`<tr><td>${p.data?fmtDateBR(p.data):'—'}</td><td>${xesc(p.nome)}</td><td>${xesc(canalLabel(p))}</td><td>${xesc(programaLabel(p))}</td><td>${xesc(p.editor)}</td><td>${xesc(p.fluxo)}</td>${procs.map(pr=>{const s=stageTime(p,pr);return `<td>${s?fmt(s):'—'}</td>`;}).join("")}<td>${fmt(projectTotal(p))}</td><td>${checklistPct(p)}%</td><td>${xesc(p.drive)}</td></tr>`;});
-  h+=`<tr style="font-weight:bold"><td colspan="${6+procs.length}">Total do período</td><td>${fmt(list.reduce((a,p)=>a+projectTotal(p),0))}</td><td></td><td></td></tr>`;
+  h+=`<tr style="font-weight:bold;background:#dddddd"><td>Data</td><td>Projeto</td><td>Canal</td><td>Programa</td><td>Editor</td><td>Bruto</td><td>Fluxo</td>${procs.map(p=>`<td>${xesc(p)}</td>`).join("")}<td>Total</td><td>Checklist %</td><td>Link Drive</td></tr>`;
+  list.forEach(p=>{h+=`<tr><td>${p.data?fmtDateBR(p.data):'—'}</td><td>${xesc(p.nome)}</td><td>${xesc(canalLabel(p))}</td><td>${xesc(programaLabel(p))}</td><td>${xesc(p.editor)}</td><td>${xesc(p.bruto||'')}</td><td>${xesc(p.fluxo)}</td>${procs.map(pr=>{const s=stageTime(p,pr);return `<td>${s?fmt(s):'—'}</td>`;}).join("")}<td>${fmt(projectTotal(p))}</td><td>${checklistPct(p)}%</td><td>${xesc(p.drive)}</td></tr>`;});
+  h+=`<tr style="font-weight:bold"><td colspan="${7+procs.length}">Total do período</td><td>${fmt(list.reduce((a,p)=>a+projectTotal(p),0))}</td><td></td><td></td></tr>`;
   h+=`</table><br><br>`;
   h+=`<table border="1" cellspacing="0" cellpadding="4"><tr><td colspan="6" style="font-weight:bold;background:#e2b23c">Detalhe por etapa</td></tr>`;
   h+=`<tr style="font-weight:bold;background:#dddddd"><td>Projeto</td><td>Etapa</td><td>Início</td><td>Término</td><td>Tempo</td><td>Comentários (com o minuto)</td></tr>`;
@@ -616,7 +996,7 @@ function renderPomodoro(){
        <div class="muted" style="margin-top:12px" id="pomoCycTxt"></div>
      </div>
      <div class="card"><div class="big">Áudio de concentração</div>
-       <div class="chips" style="margin-top:12px" id="audioCats"><span class="chip" onclick="showCat('lofi')">🎧 Lo-fi</span><span class="chip" onclick="showCat('spotify')">🎵 Spotify</span><span class="chip" onclick="showCat('natureza')">🌿 Natureza</span><a class="chip" href="https://radio.garden/" target="_blank" rel="noopener">🌍 Radio Garden ↗</a></div>
+       <div class="chips" style="margin-top:12px" id="audioCats"><a class="chip" href="https://radio.garden/" target="_blank" rel="noopener">🌍 Radio Garden ↗</a></div>
        <div id="audioOptions" style="margin-top:12px;display:none"></div>
        <div class="field" style="margin-top:16px"><label>Cole um link do YouTube (vídeo ou playlist), Spotify ou SoundCloud</label><div class="row" style="gap:8px"><input class="inp" id="pomoLink" placeholder="https://youtube.com/... ou https://open.spotify.com/..."><button class="btn gold sm" onclick="playMyLink()">Tocar aqui</button></div></div>
        <div id="playerSlot"></div>
@@ -708,7 +1088,7 @@ function renderConfig(){
      <table class="tbl"><thead><tr><th>Período</th><th>Gerado em</th><th>Projetos</th><th>Tempo</th></tr></thead><tbody>${DB.savedReports.length?DB.savedReports.map(r=>`<tr><td>${esc(r.periodo)}</td><td>${esc(r.at)}</td><td>${r.projetos}</td><td class="mono">${esc(r.tempo)}</td></tr>`).join(""):'<tr><td colspan="4" class="muted">Nenhuma exportação ainda.</td></tr>'}</tbody></table>
    </div></div>
    <div class="set-sec"><div class="card"><div class="row between"><h3>Lixeira</h3>${DB.trash.length?`<button class="btn ghost sm" onclick="emptyTrash()">Esvaziar lixeira</button>`:''}</div><div class="muted" style="margin-top:4px">Projetos e cronômetros excluídos ficam aqui. Dá pra restaurar ou apagar de vez.</div>
-     ${DB.trash.length?`<table class="tbl"><thead><tr><th>Item</th><th>Tipo</th><th>Excluído em</th><th></th></tr></thead><tbody>${DB.trash.map((it,i)=>`<tr><td>${esc(it.type==='project'?it.data.nome:(it.data.name+' — '+(it.projectName||'')))}</td><td>${it.type==='project'?'Projeto':'Cronômetro'}</td><td>${new Date(it.at).toLocaleString('pt-BR')}</td><td style="white-space:nowrap"><button class="mini" onclick="restoreTrash(${i})">↩ Restaurar</button> <button class="mini" onclick="purgeTrash(${i})">🗑</button></td></tr>`).join("")}</tbody></table>`:'<div class="muted" style="margin-top:10px">Lixeira vazia.</div>'}
+     ${DB.trash.length?`<table class="tbl"><thead><tr><th>Item</th><th>Tipo</th><th>Excluído em</th><th></th></tr></thead><tbody>${DB.trash.map((it,i)=>`<tr><td>${esc(it.type==='project'?it.data.nome:(it.type==='task'?it.data.nome:(it.data.name+' — '+(it.projectName||''))))}</td><td>${it.type==='project'?'Projeto':(it.type==='task'?'Tarefa':'Cronômetro')}</td><td>${new Date(it.at).toLocaleString('pt-BR')}</td><td style="white-space:nowrap"><button class="mini" onclick="restoreTrash(${i})">↩ Restaurar</button> <button class="mini" onclick="purgeTrash(${i})">🗑</button></td></tr>`).join("")}</tbody></table>`:'<div class="muted" style="margin-top:10px">Lixeira vazia.</div>'}
    </div></div>
    <div class="set-sec"><div class="card"><h3>Backup e segurança</h3><div class="muted" style="margin-top:4px">Baixe uma cópia de todos os seus dados (projetos, tempos, comentários e histórico).</div>
      <div class="row wrapf" style="gap:8px;margin-top:14px"><button class="btn gold sm" onclick="backupDownload()">⬇ Baixar backup completo</button><input type="file" id="importIn" accept="application/json" style="display:none"><button class="btn ghost sm" onclick="document.getElementById('importIn').click()">Importar backup</button></div>
@@ -789,14 +1169,18 @@ $("#bell").onclick=function(){audioOK=!audioOK;this.classList.toggle('on',audioO
 function beep(){try{const ctx=new (window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.type='sine';o.frequency.value=880;g.gain.value=.0001;o.start();g.gain.exponentialRampToValueAtTime(.2,ctx.currentTime+.05);g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+.6);o.stop(ctx.currentTime+.65);}catch(e){}}
 
 function tickClock(){const el=$("#clockT");if(el){el.textContent=new Date().toLocaleTimeString('pt-BR');const cd=$("#clockD");if(cd)cd.textContent='Horário local';}}
+/* Guarda de inatividade: se o app dormir/fechar por muito tempo com cronômetro rodando, não conta esse período */
+const IDLE_LIMIT=15*60*1000;
+function skipIdle(ms,motivo){let any=false;DB.projects.forEach(p=>p.timers.forEach(t=>{if(t.status==='running'&&t.startedAt){t.startedAt+=ms;tHist(t,'Ignorado '+fmt(Math.round(ms/1000))+' de inatividade ('+motivo+').');any=true;}}));if(any)save();return any;}
+(function(){const ls=DB.prefs._lastSeen;if(ls){const gap=Date.now()-ls;if(gap>IDLE_LIMIT&&skipIdle(gap,'app estava fechado'))setTimeout(()=>toast('Ignorei o tempo em que o app ficou fechado em cronômetro(s) que estavam rodando.'),900);}})();
+let _lastTick=Date.now();
 setInterval(()=>{
+  const now=Date.now();const gap=now-_lastTick;_lastTick=now;DB.prefs._lastSeen=now;
+  if(gap>IDLE_LIMIT&&skipIdle(gap,'computador dormiu'))toast('Ignorei inatividade em cronômetro(s) que ficaram rodando.');
   tickClock();
-  // atualizar cronômetros visíveis
   $$("[data-elapsed]").forEach(el=>{const id=el.getAttribute('data-elapsed');let t=null;DB.projects.forEach(p=>p.timers.forEach(x=>{if(x.id===id)t=x;}));if(t){el.innerHTML=(t.status==='running'?'<span class="dot"></span>':'')+fmt(elapsed(t));}});
   updateProjectKpis();
-  // fab
   const r=runningList();if(r.length&&current!=='projeto'){$("#fab").classList.add('show');$("#fabT").textContent=r[0].t.name+" · "+fmt(elapsed(r[0].t));$("#fabN").textContent=r.length>1?(r.length+" rodando · toque para voltar"):"Rodando · toque para voltar";}else if(current!=='projeto')$("#fab").classList.remove('show');
-  // sino de hora em hora
   const h=new Date().getHours();if(h!==lastBellHour){lastBellHour=h;if(DB.prefs.bell&&audioOK&&anyRunning()){beep();toast("🔔 "+pad(h)+":00");}}
 },1000);
 // salvar periodicamente (garante persistência de tempo em execução)
@@ -806,7 +1190,7 @@ window.addEventListener('beforeunload',save);
 /* ============================ INIT ============================ */
 applyProfile(DB.prefs.profile||'ambar');
 refreshProfile();
-renderProjetos();
+renderInicio();
 </script>
 </body>
 </html>
