@@ -447,6 +447,8 @@ function npUpdatePrograma(preselect){const canal=$("#npCanal").value;const sel=$
 function npToggleProg(){const pr=$("#npPrograma").value;const pw=$("#npProgramaTxtWrap");if(pw)pw.style.display=(pr==='Interno'||pr==='Outro')?'block':'none';const n=$("#npGavetaNote");if(n)n.style.display=(pr==='Gaveta')?'block':'none';}
 function addLinkRow(label,url){const box=$("#npLinks");if(!box)return;const div=document.createElement('div');div.className='row link-row';div.style.gap='6px';div.style.marginTop='8px';div.innerHTML=`<input class="inp lk-label" placeholder="Nome (ex: Roteiro)" value="${esc(label||'')}" style="max-width:190px"><input class="inp lk-url" placeholder="https://..." value="${esc(url||'')}"><button class="btn ghost sm" title="Remover" onclick="this.parentNode.remove()">✕</button>`;box.appendChild(div);}
 function collectLinks(){return $$("#npLinks .link-row").map(r=>({label:r.querySelector('.lk-label').value.trim(),url:r.querySelector('.lk-url').value.trim()})).filter(l=>l.url);}
+const DEFAULT_TIMERS=["Criação de inserções","Edição","Espera para revisão","Revisão","Alterações","Exportação"];
+function makeDefaultTimers(){return DEFAULT_TIMERS.map(n=>({id:uid(),name:n,status:'idle',accumulated:0,startedAt:null,startClock:null,endClock:null,comments:[],history:[]}));}
 function saveProjectForm(id){
   const nome=$("#npNome").value.trim()||"(sem nome)";
   const canal=$("#npCanal").value;const canalTxt=(canal==='Interno / Outro')?$("#npCanalTxt").value.trim():'';
@@ -456,7 +458,7 @@ function saveProjectForm(id){
   const data=$("#npData").value||(programa==='Gaveta'?'':new Date().toISOString().slice(0,10));
   const base={nome,editor:$("#npEditor").value.trim(),data,canal,canalTxt,programa,programaTxt,bruto,fluxo:$("#npFluxo").value,drive:$("#npDrive").value.trim(),links:collectLinks(),obs:$("#npObs").value.trim()};
   if(id){const p=getProject(id);if(p){Object.assign(p,base);save();closeModal();openProject(id);toast("Projeto atualizado.");}}
-  else{const p=Object.assign({id:uid(),status:"em edição",done:false,createdAt:Date.now(),timers:[],checklist:emptyChecklist()},base);DB.projects.unshift(p);save();closeModal();openProject(p.id);toast("Projeto criado.");}
+  else{const p=Object.assign({id:uid(),status:"em edição",done:false,createdAt:Date.now(),timers:makeDefaultTimers(),checklist:emptyChecklist()},base);DB.projects.unshift(p);save();closeModal();openProject(p.id);toast("Projeto criado.");}
 }
 
 /* ============================ PROJETO ABERTO ============================ */
